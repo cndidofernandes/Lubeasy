@@ -64,7 +64,7 @@ class Auth {
     this.expiresAt = null;
     this.auth0.logout({
         returnTo: 'http://localhost:3000',
-        clientID: 'Jh3SxZEnAVceDBnd7gSkuZWxYkUmOIft',
+        clientID: process.env.REACT_APP_AUTH_CLIENTE_ID,
     });
   }
 
