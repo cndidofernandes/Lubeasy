@@ -7,9 +7,9 @@ class Auth {
       audience: process.env.REACT_APP_AUTH_AUDIENCE,
       clientID: process.env.REACT_APP_AUTH_CLIENTE_ID,
       redirectUri: process.env.REACT_APP_AUTH_REDIRECT_URI,
-      responseType: process.env.REACT_APP_AUTH_RESPONSE_TYPE,
-      response_mode: process.env.REACT_APP_AUTH_QUERY,
-      scope: process.env.REACT_APP_AUTH_SCOPE,
+      responseType: 'code',
+      response_mode: 'query',
+      scope: 'openid profile email'
     });
 
     this.getProfile = this.getProfile.bind(this);

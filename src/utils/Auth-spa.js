@@ -5,7 +5,7 @@ export const Auth0 = async () => {
     domain: process.env.REACT_APP_AUTH_DOMAIN,
     client_id: process.env.REACT_APP_AUTH_CLIENTE_ID,
     audience: process.env.REACT_APP_AUTH_AUDIENCE,
-    scope: process.env.REACT_APP_AUTH_SCOPE,
+    scope: 'openid profile',
     redirect_uri: process.env.REACT_APP_AUTH_REDIRECT_URI,
   });
 } 
