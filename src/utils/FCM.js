@@ -1,4 +1,4 @@
-import * as firebase from "firebase/app";
+/*import * as firebase from "firebase/app";
 import "firebase/messaging";
 import "firebase/analytics";
 
@@ -51,4 +51,4 @@ export function getToken(messaging) {
             console.log('An error occurred while retrieving token. ', err);
         });
 
-}
+}*/

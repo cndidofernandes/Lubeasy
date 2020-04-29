@@ -31,7 +31,7 @@ import DialogWithConfirmation from "../customComponents/Dialog/DialogWithConfirm
 
 import { domain_api } from "../../utils/ApiConfig";
 import {Auth0} from "../../utils/Auth-spa";
-import { requestNotification, getToken, messaging } from "../../utils/FCM";
+//import { requestNotification, getToken, messaging } from "../../utils/FCM";
 
 
 function AppBarHome(props) {
@@ -224,8 +224,6 @@ export default function HomePage(props) {
         }).catch(function (error) {
             setProdutoResponseApi({...produtoResponseApi, err: {request: 'É um erro do auth0'}});
         });
-
-        requestNotification()
 
         //navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
     }, []);    

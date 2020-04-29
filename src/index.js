@@ -6,7 +6,7 @@ import { CssBaseline } from '@material-ui/core';
 import { Provider } from 'react-redux'
 import storeApp from "./redux/StoreApp";
 
-//Sentry.init({dsn: "https://9be457cd8f144d0d9e5fcbb472cb4947@sentry.io/1871166"});
+Sentry.init({dsn: "https://9be457cd8f144d0d9e5fcbb472cb4947@sentry.io/1871166"});
 
 ReactDOM.render(
     <Provider store={storeApp}>
