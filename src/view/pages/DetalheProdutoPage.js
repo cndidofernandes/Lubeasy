@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles, useTheme } from "@material-ui/styles";
 import { Grid, Typography, Button } from '@material-ui/core';
 import TransparentAppBarWithBackButton from "../customComponents/TransparentAppBarWithBackButton";
-import Slide from '@material-ui/core/Slide';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Fab from '@material-ui/core/Fab';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -13,24 +12,24 @@ import { domain_api } from "../../utils/ApiConfig";
 
 import {useParams} from 'react-router-dom'
 
-import MobileStepper from '@material-ui/core/MobileStepper';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 import axios from "axios";
 
 import PHPdateTime from "./../../utils/PHPdateTime";
 import RecommendedProdutosHorizontal from '../customComponents/RecommendedProdutosHorizontal';
-
+import PictureStepper from '../customComponents/PictureStepper';
 
 
 const useStyle = makeStyles( (theme) => ({
   flyer:{
     width: '100%',
-    height: '20%',
-    [theme.breakpoints.down('md')]: {
-      height: '45%',
+    height: 380,
+    [theme.breakpoints.up(400)]: {
+      height: 420,
+    },
+    [theme.breakpoints.up(768)]: {
+      height: 768,
     },
   },
   priceBox: {
@@ -53,97 +52,37 @@ const useStyle = makeStyles( (theme) => ({
     boxShadow: 'none',
     margin: theme.spacing(0,2,3,2)
   } ,
-    rootStepper: {
-        maxWidth: 400,
-        flexGrow: 1,
-    },
-    headerStepper: {
-        display: 'flex',
-        alignItems: 'center',
-        height: 50,
-        paddingLeft: theme.spacing(4),
-        backgroundColor: theme.palette.background.default,
-    },
-    imgStepper: {
-        height: 255,
-        display: 'block',
-        maxWidth: 400,
-        overflow: 'hidden',
-        width: '100%',
-    },
-    margin: {
-        marginRight: theme.spacing(1),
-    },
-    fab: {
-        position: 'fixed',
-        bottom: 25,
-    },
+  margin: {
+    marginRight: theme.spacing(1),
+  },
+  fab: {
+    position: 'fixed',
+    bottom: 25,
+    textTransform: 'none'
+  },
 }));
-
-function PictureStepper(props) {
-    const classes = useStyle();
-    const theme = useTheme();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const tutorialSteps=[
-        props.capa, props.contracapa
-    ]
-  
-    const maxSteps = tutorialSteps.length;
-
-    const handleNext = () => {
-        setActiveStep(prevActiveStep => prevActiveStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep(prevActiveStep => prevActiveStep - 1);
-    };
-
-    return (
-        <div className={classes.root}>
-            <Slide direction={'left'} in={true} mountOnEnter unmountOnExit>
-              <img className={classes.flyer} src={tutorialSteps[activeStep]} alt={tutorialSteps[activeStep]} />
-            </Slide>
-            <MobileStepper 
-                style={{backgroundColor:'white'}}
-                steps={maxSteps}
-                position="static"
-                variant="dots"
-                activeStep={activeStep}
-                nextButton={
-                   <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-                      {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                   </Button>
-                }
-               backButton={
-                   <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                    {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                   </Button>
-               } />
-        </div>
-    );
-}
 
 function Header(props){
   //const bull = <span className={props.classes.bullet}>•</span>;
 
   return (
     <>
-        <PictureStepper {...props}/>
+        <PictureStepper images={[{label: props.titulo, imgPath: props.capa}, {label: props.titulo, imgPath: props.contracapa}]}/>
         <div style={{margin: 16, marginTop: 8}}>
           
-          <div style={{display: 'flex'}}>
-            <Typography variant={'caption'} style={{alignSelf: 'flex-start',fontWeight: 'bold', flexGrow: 1, marginRight: 10}} color='secondary' children={props.tags} />
-            <Typography variant={'body2'} style={{alignSelf: 'flex-end', fontWeight: 'bold'}} color='secondary' children={'Por '+props.preco+' Kz'} />
+          <div style={{display: 'flex', flexGrow: 1, justifyContent: 'flex-end'}}>
+            <Typography variant={'caption'} style={{fontWeight: 'bold', marginLeft: 8}} color='secondary' children={props.tags} />
+            {/*<Typography variant={'body2'} style={{alignSelf: 'flex-end', fontWeight: 'bold'}} color='secondary' children={'Por '+props.preco+' Kz'} />*/}
           </div>
 
-          <Typography variant={'h6'} style={{fontWeight: 'bold'}} children={props.titulo} />
+          <Typography variant={'h6'} style={{marginTop: 4, fontWeight: 'bold'}} children={props.titulo} />
           <Typography variant={'body2'} color={'textSecondary'} children={props.autor} />
-          <Typography variant={'body2'} style={{marginTop: 14}} children={props.tipo+' • '+props.estilo} />
-          <Typography variant="body1" style={{marginTop: 4}} align='justify' color={'textSecondary'}>{props.descricao}</Typography>
+          <Typography variant={'body2'} style={{marginTop: 16}} children={props.tipo+' • '+props.estilo} />
+          <Typography variant="body2" style={{marginTop: 4}} align='justify' color={'textSecondary'}>{props.descricao}</Typography>
 
-          <Button href={`${props.previa}`} target='_blank' disabled={!props.previa} variant='contained' startIcon={<ArrowDownwardIcon />} style={{marginTop: 20}} color={'secondary'} size='small' disableElevation>Baixar uma amostra</Button>
+          <Button href={`${props.previa}`} target='_blank' disabled={!props.previa} variant='contained' startIcon={<ArrowDownwardIcon />} style={{marginTop: 24}} color={'secondary'} size='small' disableElevation>Baixar uma amostra</Button>
 
-          <Typography variant="body2" style={{marginTop: 20}} color={'textSecondary'}>Publicado em {PHPdateTime('d m Y', props.dataDePublicacao)}, por @Lubeasy</Typography>
+          <Typography variant="body2" style={{marginTop: 24}} color={'textSecondary'}>Publicado em {PHPdateTime('d m Y', props.dataDePublicacao)}, por @Lubeasy</Typography>
         </div>
     </>
   )
@@ -158,13 +97,13 @@ function MainContentProduto(props){
   const onCloseDialogForPayment = () => setOpenDialogForPayment(false);
 
   return (
-    <Grid container direction="column" justify="center" alignItems="center" >
+    <Grid style={{background: '#fff'}} container direction="column" justify="center" alignItems="center" >
 
-        <Grid item xs={12} sm={10} md={8} style={{background: '#fff', paddingBottom: 20}}>
+        <Grid xs={12} lg={10} item style={{background: '#fff', paddingBottom: 20}}>
           <Header classes={classes} theme={theme} {...props.data}  /> 
-          <RecommendedProdutosHorizontal by='estilo' data={props.data.estilo} />
+          <RecommendedProdutosHorizontal tipo={`${props.data.tipo}s`} by='estilo' data={props.data.estilo} uuidProduto={props.data.uuid} />
         </Grid>
-        <Grid item xs={12} sm={10} md={8} style={{background: '#fff'}}>
+        <Grid xs={12} lg={10} item style={{background: '#fff'}}>
             <br/>
             <br/>
             <br/>
@@ -186,10 +125,10 @@ function MainContentProduto(props){
             variant="extended"
             size="medium"
             color="secondary"
-            aria-label="buy" className={classes.fab}
+            aria-label="buy" 
+            className={classes.fab}
             onClick={ () => setOpenDialogForPayment(true)} >
-            <ShoppingCartIcon className={classes.margin} />
-            Comprar
+            Comprar a {props.data.preco} Kz
         </Fab>
     </Grid>
   );
@@ -241,7 +180,7 @@ export default function DetalheProdutoPage(props) {
 
   
   return (
-    <div style={{position:'relative'}}>
+    <div style={{flex: 'display'}}>
       <TransparentAppBarWithBackButton />
       {getDynamicContent()}
     </div>

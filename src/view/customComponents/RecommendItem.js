@@ -11,14 +11,13 @@ export default function RecommendItem(props) {
   }
 
   return (
-    <Box style={{width: 170, marginRight: 8}} my={0.5} bgcolor='background.paper'>
-        <img style={{width: 170, height: 170}} src={props.capa} alt={props.titulo} />
-        <Box m={0.8}>
+    <Box style={{width: 140, marginRight: 8}} my={1} bgcolor='background.paper'>
+        <img style={{width: 140, height: 140}} src={props.capa} alt={props.titulo} />
+        <Box m={0.4}>
             <Typography variant='subtitle1'>{props.titulo}</Typography>
-            <Typography variant='body2' color='secondary'>{props.preco} Kz</Typography>
-            <Button style={{marginTop: 4}} onClick={onClickRecommendItem} color='secondary' variant='contained' disableElevation size='small'>comprar</Button>
+            <Typography variant='body2' color='secondary'>{props.preco} Kz</Typography>            
         </Box>
-
+        <Button style={{marginTop: 4}} onClick={onClickRecommendItem} color='secondary' variant='outlined' disableElevation size='small' fullWidth>comprar</Button>
     </Box>
   );
 }

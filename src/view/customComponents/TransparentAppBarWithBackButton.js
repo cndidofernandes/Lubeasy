@@ -4,10 +4,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import {makeStyles} from "@material-ui/core/styles/";
-import {Link} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(theme=>({
     appBar:{
@@ -35,7 +33,7 @@ export default function TransparentAppBarWithBackButton(props) {
     return (
         <AppBar className={classes.appBar} style={{color:'white',background: 'linear-gradient(rgba(0, 0, 0, 0.1), transparent)', boxShadow:'none'}}>
             <Toolbar>
-                <IconButton component={Link} onClick={handleButtonBack} edge={'start'} className={classes.iconButton}>
+                <IconButton onClick={handleButtonBack} edge={'start'} className={classes.iconButton}>
                     <ArrowBackIosRoundedIcon/>
                 </IconButton>
                 <Typography className={classes.titulo} variant={'h6'}>

@@ -179,7 +179,7 @@ export default function LoginPage(props) {
                         </Box>
                         <Grid container justify='center' alignItems='center'>
                             <Box mx={'auto'} textAlign='center'>
-                                <DisablableButton color='secondary' disabled={formSubmiting} type="submit" variant={'contained'} color={'primary'} style={{boxShadow: 'none', minWidth: 300}}>Entrar</DisablableButton>
+                                <DisablableButton color='secondary' disabled={formSubmiting} type="submit" variant={'contained'} style={{boxShadow: 'none', minWidth: 300}}>Entrar</DisablableButton>
                                 <br/>
                                 <br/>
                                 <LinkCustom disabled={formSubmiting} path='signup' text='Ainda não tenho uma conta'/>

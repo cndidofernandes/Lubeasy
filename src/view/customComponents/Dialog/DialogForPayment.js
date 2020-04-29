@@ -9,7 +9,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import GetAppIcon from '@material-ui/icons/GetApp';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import DescriptionIcon from '@material-ui/icons/Description';
@@ -34,10 +33,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DisablableButton from "../DisablableButton";
 
 
-
 import { Auth0 } from '../../../utils/Auth-spa';
 import DrawerBottomPaymentInfo from '../Drawer/DrawerBottomPaymentInfo';
-import { Paper, Box } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
@@ -208,9 +206,9 @@ function VerticalLinearStepper({produtoOrder}) {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
 
-    const handleReset = () => {
+    /*const handleReset = () => {
         setActiveStep(0);
-    };
+    };*/
 
     return (
         <div className={classes.root}>

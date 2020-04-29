@@ -21,7 +21,7 @@ import auth0Client from '../../utils/Auth-js';
 import DisablableButton from "../customComponents/DisablableButton";
 import LinkCustom from "../customComponents/LinkCustom";
 import PageSnackBar from "../customComponents/PageSnackBar";
-import Link from '@material-ui/core/Link';
+
 
 import { getErrDescriptionSignUpInPTByCode } from "../../utils/UtilErr";
 
@@ -180,7 +180,7 @@ export default function SignUpPage(props) {
                         </Box>
                         <Grid container justify='center'>
                             <Grid item>
-                                <DisablableButton color='secondary' type='submit' className={classes.button} disabled={formSubmiting} variant="contained" color='primary' >Criar Conta</DisablableButton>
+                                <DisablableButton color='secondary' type='submit' className={classes.button} disabled={formSubmiting} variant="contained">Criar Conta</DisablableButton>
                             </Grid>
                         </Grid>
                     </form>

@@ -24,7 +24,7 @@ export default function Err(props) {
     }
 
     return (
-        <Grid container direction="column" justify="center" alignItems="center" style={{marginTop: 32}}>
+        <Grid container direction="column" justify="center" alignItems="center" style={{marginTop: 16}}>
             <Grid>
                 {elementIcon}
             </Grid>

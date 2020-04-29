@@ -32,10 +32,13 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   cover: {
-    [theme.breakpoints.down(380)]: {
-      width: 140
-    },
     width: 180,
+    [theme.breakpoints.down(361)]: {
+      width: 150
+    },
+    [theme.breakpoints.down(321)]: {
+      width: 135
+    },
     display: 'flex',
     alignItems: 'flex-end'
   },
@@ -94,10 +97,6 @@ export default function ProdutoItem(props) {
 
   const onClickProdutoItem = (e) => {
     history.push('/produto/'+props.uuid);
-  }
-
-  const onClickProdutoPay = (e) => {
-    setOpenDialogPayment(true);
   }
 
   return (

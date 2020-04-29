@@ -1,6 +1,7 @@
 import React from "react";
-import { Route, useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
+import HomePage from '../pages/HomePage';
 
 
 export const PublicRoute = ({ component, ...options }) => {
@@ -8,17 +9,10 @@ export const PublicRoute = ({ component, ...options }) => {
         return state.isAuthenticated
     });
 
-    const history = useHistory();
-
     useDispatch()({type: 'ADD_MORE_ONE_LOCATION_IN_STACK'});
 
-    if (isAuthenticated) {
-        history.replace('/home');
-        return '';
-    } else {
-        return <Route {...options} component={component} />;
-    }
-  
-    //const finalComponent = (isAuthenticated) ? HomePage : component;
+    const finalComponent = isAuthenticated ? HomePage : component;
+
+    return <Route {...options} component={finalComponent} />;
     
 };
