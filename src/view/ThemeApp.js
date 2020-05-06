@@ -4,10 +4,10 @@ const themeApp = createMuiTheme({
     palette:{
         type: "light",
         primary: {
-            main: '#0288d1',
+            main: '#0090FF',
         },
         secondary: {
-            main: '#ffb300',
+            main: '#EFD307',
         },
         background:{
             paper: '#fff',

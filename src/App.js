@@ -19,6 +19,7 @@ import { callIsAuthentication, callGetUser } from "./redux/actions/AuthThunkActi
 import { ThemeProvider } from '@material-ui/styles';
 import ThemeApp from './view/ThemeApp'
 import { BrowserRouter as Router, Switch,  Route} from 'react-router-dom';
+import EstatisticasDeDownload from "./view/pages/EstatisticasDeDownload";
 
 
 function ContentApp() {
@@ -38,6 +39,7 @@ function ContentApp() {
                     <Route path={'/callback'} component={CallbackPage} />
                     <Route path={'/about'} component={AboutPage} />
                     <Route path={'/produto/:uuid'} component={DetalheProdutoPage} />
+                    <Route path={'/autor/:uuidAutor/produto/:uuidProduto'} component={EstatisticasDeDownload} />
                     <Route component={NotFoundPage} />
                 </Switch>
             </Router>

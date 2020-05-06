@@ -31,7 +31,7 @@ export default function TransparentAppBarWithBackButton(props) {
     }
 
     return (
-        <AppBar className={classes.appBar} style={{color:'white',background: 'linear-gradient(rgba(0, 0, 0, 0.1), transparent)', boxShadow:'none'}}>
+        <AppBar className={classes.appBar} style={{boxShadow:'none'}}>
             <Toolbar>
                 <IconButton onClick={handleButtonBack} edge={'start'} className={classes.iconButton}>
                     <ArrowBackIosRoundedIcon/>

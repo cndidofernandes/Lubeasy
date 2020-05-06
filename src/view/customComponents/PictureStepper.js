@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
+import CardMedia from "@material-ui/core/CardMedia";
 
 const images = [
   {
@@ -36,13 +37,21 @@ const images = [
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+
+  },
+  images: {
+    height: 500,
+    [theme.breakpoints.up('lg')]: {
+      height: 600,
+    },
+    [theme.breakpoints.up('xl')]: {
+      height: 700,
+    },
   },
   header: {
     display: 'flex',
     alignItems: 'center',
     height: 50,
-    paddingLeft: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
   },
 }));
@@ -54,17 +63,17 @@ function PictureStepper(props) {
   const [heightOfImg, setHeightOfImg] = React.useState(window.innerWidth);
   const maxSteps = props.images.length;
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     window.addEventListener("resize", updateWindowDimensions);
 
     return () => {
         window.removeEventListener("resize", updateWindowDimensions);
     };
-  });
+  });*/
 
-  const updateWindowDimensions = () => {
+  /*const updateWindowDimensions = () => {
     setHeightOfImg(window.innerWidth);
-  };
+  };*/
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -89,12 +98,13 @@ function PictureStepper(props) {
         {props.images.map((step, index) => (
           <div key={step.label+`${index}`}>
             {Math.abs(activeStep - index) <= 2 ? (
-              <img style={{height: heightOfImg, display: 'block', overflow: 'hidden', width: '100%'}} src={step.imgPath} alt={step.label} />
+                <CardMedia className={classes.images} image={step.imgPath} title={step.label} />
             ) : null}
           </div>
         ))}
       </SwipeableViews>
       <MobileStepper
+        className={classes.header}
         steps={maxSteps}
         position="static"
         variant="dots"

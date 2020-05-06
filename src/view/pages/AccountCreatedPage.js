@@ -26,7 +26,7 @@ export default function AccountCreatedPage(props) {
                       <Box p={2}>
                           <Typography align={'center'} gutterBottom>A sua conta foi criada com sucesso</Typography>
                           <Typography align={'center'} gutterBottom color={'textSecondary'}>
-                              Consulte o seu email {<b>{props.email}</b>}, para activar a sua conta e poderes baixar as tuas músicas, livros, imagens e vídeos favoritos.
+                              Consulte o seu email, para activar a sua conta e poderes baixar as tuas músicas, livros, imagens e vídeos favoritos.
                           </Typography>
                       </Box>
                   </Grid>
@@ -35,7 +35,7 @@ export default function AccountCreatedPage(props) {
 
                   <Grid item>
 
-                      <Button onClick={ () => { props.history.replace('/'); }} variant="contained" color="secondary" size="large" style={{boxShadow:'none'}}>Ir para o App</Button>
+                      <Button onClick={ () => { props.history.replace('/'); }} variant="contained" color="primary" size="large" style={{boxShadow:'none'}}>Ir para o App</Button>
                       <br/>
                       <br/>
                   </Grid>
@@ -47,7 +47,7 @@ export default function AccountCreatedPage(props) {
                       <Box p={2} py={4}>
 
                           <Typography align={'center'} color={'textSecondary'}>
-                              © Copyrights Lubventos. Todos os direitos reservados.
+                              © Copyrights Lubeasy. Todos os direitos reservados.
                               Desenhado por Lubeasy
                           </Typography>
                       </Box>

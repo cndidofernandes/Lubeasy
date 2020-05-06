@@ -55,11 +55,11 @@ const ContentSuccess = ({priceToPay}) => {
                 <CheckCircleRoundedIcon style={{color: '#00e700'}} fontSize={'inherit'}/>
             </Box>
             <Box textAlign={'center'} mx={0.9} fontFamily="fontFamily" fontWeight={600} fontSize={"h6.fontSize"}>
-                O pedido de compra do download foi feito com sucesso.
+                O pedido de compra do produto foi efectuado com sucesso.
             </Box>
             
             <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
-                Utilize os dados bancários abaixo, para fazer o pagamento do seu download. Após efetuar o pagamento, envie-nos uma foto do comprovativo.
+                Utilize os dados bancários abaixo, para fazer o pagamento do seu download. Após efetuar o pagamento, envie-nos uma foto do comprovativo através das nossas redes socias.
             </Typography>
             <Typography className={classes.textoResponsivo} style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
                 <b>IBAN:</b> {BFA_ACCOUNT_INFO.IBAN}
@@ -78,7 +78,7 @@ const ContentSuccess = ({priceToPay}) => {
                 Tem alguma dúvida como fazer o pagamento? <a href="#https://www.w3schools.com/" target="_blank">Clique aqui</a>
             </Typography>
 
-            <Button onClick={() => history.replace('/meusdownloads')} style={{boxShadow: 'none', margin: 16, color: '#fff'}} variant='contained' color='secondary'>IR PARA OS DOWNLOADS</Button>
+            <Button onClick={() => history.replace('/meusdownloads')} style={{margin: 16}} variant='contained' color='primary' disableElevation>IR PARA AS MINHAS COMPAR</Button>
         </>
     )
 } 

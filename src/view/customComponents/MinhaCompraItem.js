@@ -29,7 +29,7 @@ import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     MyAvatar: {
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.main,
     },bullet: {
         display: 'inline-block',
         margin: '0 2px',
@@ -38,6 +38,9 @@ const useStyles = makeStyles(theme => ({
     listItem: {
         marginBottom: 1,
         background: theme.palette.background.paper
+    },
+    iconAvatar: {
+        color: theme.palette.background.paper
     }
 }));
 
@@ -51,26 +54,26 @@ export default function MinhaCompraItem(props) {
     
         //Music
         case 0: 
-            AvatarIcon = (<AudiotrackIcon />);
+            AvatarIcon = (<AudiotrackIcon className={classes.iconAvatar}/>);
             break;
     
         //Video
         case 1:
-            AvatarIcon = (<TheatersIcon />);
+            AvatarIcon = (<TheatersIcon className={classes.iconAvatar}/>);
             break;
         
         //Image
         case 2:
-            AvatarIcon = (<ImageIcon />);
+            AvatarIcon = (<ImageIcon className={classes.iconAvatar}/>);
             break;
     
         //Docs
         case 3:  
-            AvatarIcon = (<DescriptionIcon />);
+            AvatarIcon = (<DescriptionIcon className={classes.iconAvatar}/>);
             break;
       
         default:         
-            AvatarIcon = (<ErrorOutlineIcon />);
+            AvatarIcon = (<ErrorOutlineIcon className={classes.iconAvatar}/>);
             break;
         
     }
@@ -131,7 +134,7 @@ export default function MinhaCompraItem(props) {
                                             {props.autor}
                                           </Typography>
                                           
-                                          <Typography variant={'caption'} color={'secondary'} >
+                                          <Typography variant={'caption'} color={'primary'} >
                                             {PHPdateTime('d m Y', props.dataDaCompra)} • {<b>Por {props.preco+' Kz'}</b>}
                                           </Typography>
                                     </>

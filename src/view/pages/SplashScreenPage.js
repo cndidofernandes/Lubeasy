@@ -1,7 +1,7 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import appLogotipo from '../../assets/lubventos_icon.svg';
+import appLogotipo from '../../assets/logo.png';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Box from '@material-ui/core/Box';
 import { Fade } from '@material-ui/core';
@@ -16,10 +16,10 @@ const CircularLogo = withStyles(theme => ({
 
 const ColorLinearProgress = withStyles({
     colorPrimary: {
-      backgroundColor: '#ffca28',
+      backgroundColor: '#EFD307',
     },
     barColorPrimary: {
-      backgroundColor: '#ffb300',
+      backgroundColor: '#ffe000',
     },
 })(LinearProgress);
 

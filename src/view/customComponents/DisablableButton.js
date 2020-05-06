@@ -16,7 +16,7 @@ export default function DisablableButton(props){
     marginLeft: -12,}}/>
     return (
         <div className={classes.root}>
-            <Button {...props} color='secondary'>{props.children}</Button>
+            <Button {...props}>{props.children}</Button>
             {props.disabledProgress !== undefined ? (props.disabledProgress ? progress : '') : (props.disabled ? progress : '')}
         </div>
     )

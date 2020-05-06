@@ -1,0 +1,10 @@
+.mainContent{
+    display: flex;
+    overflow-x: auto;
+    padding-right: 8px;
+
+}
+
+.mainContent::-webkit-scrollbar {
+    display: none;
+}

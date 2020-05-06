@@ -89,7 +89,7 @@ function ProdutoOrderItem({categoria, titulo, autor, preco }) {
 
     return (
         <div style={{display: 'flex', alignItems: 'center', marginTop: 8,marginBottom: 8}} >
-            <Box m={1} display="flex" alignItems="center" justifyContent="center" bgcolor='secondary.main' borderRadius='50%'>
+            <Box m={1} display="flex" alignItems="center" justifyContent="center" bgcolor='primary.dark' borderRadius='50%'>
                 {getIconOfEstiloByCategoria(categoria)}
             </Box>
             <div style={{width: '75%', whiteSpace: 'nowrap', flexGrow: 1}}>
@@ -100,7 +100,7 @@ function ProdutoOrderItem({categoria, titulo, autor, preco }) {
                   {autor}
                 </Box>
             </div>
-            <Box fontSize='body2.fontSize' textAlign="center" mx={1.5}> <b>{preco}</b> Akz</Box>
+            <Box fontSize='body2.fontSize' textAlign="center" mx={1.5} color={'secondary.main'}> <b>{preco}</b> Akz</Box>
         </div>
     );
 }
@@ -127,7 +127,7 @@ function GetStepContent({step, formPaymentValue, handleChange, onClickFormPay, i
                                       onClick={onClickFormPay}
                                       variant='contained' 
                                       className={classes.espaco} 
-                                      color='secondary' 
+                                      color='primary'
                                       disableElevation 
                                       children='Fazer pedido de compra' />
                 </div>
@@ -228,7 +228,7 @@ function VerticalLinearStepper({produtoOrder}) {
                             <div className={classes.actionsContainer}>
                                 <div>
                                     <Button disabled={activeStep === 0 || networkObj.isLoading} onClick={handleBack} className={classes.button}>Voltar</Button>
-                                    {activeStep === steps.length - 1 ? '' : ( <Button variant="contained" color='secondary' onClick={handleNext} className={classes.button} disableElevation>Seguinte</Button>)}
+                                    {activeStep === steps.length - 1 ? '' : ( <Button variant="contained" color='primary' onClick={handleNext} className={classes.button} disableElevation>Seguinte</Button>)}
                                 </div>
                             </div>
                         </StepContent>

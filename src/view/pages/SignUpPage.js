@@ -51,6 +51,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: "column",
         padding: theme.spacing(3),
         paddingTop: 20,
+        paddingBottom: 0,
         marginTop: theme.spacing(2),
     },
     textField: {
@@ -78,7 +79,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(1)
     },
     link: {
-        color: theme.palette.secondary.main
+        color: '#515149'
     }
 }));
 
@@ -152,7 +153,7 @@ export default function SignUpPage(props) {
         <div className={classes.root}>
             <div className={classes.content}>
                 <Paper className={classes.paper} style={{marginTop: 0, display: 'flex', flexDirection: "row",padding: 0, alignItems: 'stretch'}} elevation={0}>
-                    <Box className={classes.titleAppBar} fontSize="h6.fontSize" fontWeight="fontWeightBold">Criar Conta</Box>
+                    <Box className={classes.titleAppBar} fontSize="h6.fontSize">Criar Conta</Box>
                 </Paper>
                 <Paper className={classes.paper} elevation={0}>
                     <form autoComplete="off" onSubmit={criarConta}>
@@ -180,7 +181,7 @@ export default function SignUpPage(props) {
                         </Box>
                         <Grid container justify='center'>
                             <Grid item>
-                                <DisablableButton color='secondary' type='submit' className={classes.button} disabled={formSubmiting} variant="contained">Criar Conta</DisablableButton>
+                                <DisablableButton color='primary' type='submit' className={classes.button} disabled={formSubmiting} variant="contained">Criar Conta</DisablableButton>
                             </Grid>
                         </Grid>
                     </form>
@@ -188,7 +189,7 @@ export default function SignUpPage(props) {
                     <Box className={classes.typography} textAlign="center" variant='body2' >Ao clicar em criar conta, você concorda com nossos {<b><LinkCustom disabled={formSubmiting} path={'https://lubventos.herokuapp.com/website/termos'} text="Termos e Condições De Utilização." /></b>}</Box>
                 </Paper>
                 <Paper className={classes.paper} elevation={0}>
-                    <Box className={classes.typography} textAlign="center">Já tem uma conta? <LinkCustom disabled={formSubmiting} path='/login' text={<b className={classes.link}>Faça o login</b>}/> </Box>
+                    <Box className={classes.typography} textAlign="center">Já tem uma conta? <LinkCustom disabled={formSubmiting} path='/login' text={<p className={classes.link}>Faça o login</p>}/> </Box>
                 </Paper>
                 <PageSnackBar snackBarOpened={snackBarOpened} handleClose={handleSnackBarErrClose} message={values.err}/>
             </div>

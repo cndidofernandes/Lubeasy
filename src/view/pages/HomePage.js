@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import {Grid, Typography, Box } from '@material-ui/core';
+import {Grid, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import List from '@material-ui/core/List';
@@ -17,6 +17,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import PropTypes from 'prop-types'; 
 
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import MoreVertRoundedIcon from '@material-ui/icons/MoreVertRounded';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import InfoIcon from '@material-ui/icons/Info';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
@@ -24,6 +25,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 import ProdutoItem from "../customComponents/ProdutoItem";
 import ErrComponent from "../customComponents/Err";
@@ -31,7 +33,11 @@ import DialogWithConfirmation from "../customComponents/Dialog/DialogWithConfirm
 
 import { domain_api } from "../../utils/ApiConfig";
 import {Auth0} from "../../utils/Auth-spa";
-//import { requestNotification, getToken, messaging } from "../../utils/FCM";
+import grey from "@material-ui/core/colors/grey";
+
+import AppLogoFull from '../../assets/full_logo.png'
+import {removeAllCookieAppToLogout} from "../../utils/HandlerCookieUtil";
+
 
 
 function AppBarHome(props) {
@@ -51,6 +57,7 @@ function AppBarHome(props) {
 
     const logout = () => {
         setDisabledDialogLogout(true);
+        removeAllCookieAppToLogout(new Cookies());
 
         Auth0()
             .then(function (auth0) {
@@ -78,19 +85,28 @@ function AppBarHome(props) {
     return (
         <React.Fragment>
             <Grow in>
-                <AppBar position={"static"} style={{background: '#FFFFFF', boxShadow:'none'}}>
+                <AppBar position={"static"}
+                        style={{
+                            boxShadow: 'none',
+                            background: '#fff',
+                            borderBottomStyle: 'solid',
+                            borderBottomWidth: 1,
+                            borderBottomColor: grey[100]}}>
                     <Toolbar>
-                        <Typography variant='h6' style={{flexGrow: 1, color: '#000',}}>{props.title}</Typography>
+                        <img src={AppLogoFull}
+                             alt={'Lubeasy logo'}
+                             style={{ height: 46, width: 146}}/>
+                        <Typography style={{flexGrow: 1}} />
 
-                        <IconButton edge={'end'} onClick={handleClick2} color='secondary'>
-                            <AccountCircleRoundedIcon />
+                        <IconButton edge={'end'} onClick={handleClick2} color='primary'>
+                            <MoreVertRoundedIcon />
                         </IconButton>
 
                         <Menu id="minha-conta" anchorEl={anchorEl2} keepMounted open={Boolean(anchorEl2)} onClose={handleClose2}>
                             <List component={'div'}>
                                 <ListItem button divider>
-                                    <ListItemAvatar color={'primary'}>
-                                        <Avatar>{props.nameUser.charAt(0).toUpperCase()}</Avatar>
+                                    <ListItemAvatar color={'secondary'}>
+                                        <Avatar color={'secondary'}>{props.nameUser.charAt(0).toUpperCase()}</Avatar>
                                     </ListItemAvatar>
                                     <ListItemText primary={props.nameUser} secondary={props.emailUser} />
                                 </ListItem>
@@ -104,7 +120,7 @@ function AppBarHome(props) {
                                     <ListItemAvatar>
                                         <GetAppIcon/>
                                     </ListItemAvatar>
-                                    <ListItemText primary="Meus Downloads"/>
+                                    <ListItemText primary="Minhas compras"/>
                                 </ListItem>
                                 <ListItem button onClick={listenerLogoutClick}>
                                     <ListItemAvatar>
@@ -136,16 +152,18 @@ function AppBarHome(props) {
 }
 
 const renderProdutoItem = (value, idx) => {
-    return (<ProdutoItem 
-                key={value.id} 
-                id={value.id}
-                uuid={value.uuid} 
-                imagemProduto={value.capa} 
-                nomeProduto={value.titulo} 
-                autorProduto={value.autor} 
-                tipoProduto={value.tipo}
-                categoriaProduto={value.categoria}
-                precoProduto={value.preco} />)
+    return ( <Grid item xs={6} sm={4} md={3} xl={2}>
+                <ProdutoItem
+                    key={idx}
+                    id={value.id}
+                    uuid={value.uuid}
+                    imagemProduto={value.capa}
+                    nomeProduto={value.titulo}
+                    autorProduto={value.autor}
+                    tipoProduto={value.tipo}
+                    categoriaProduto={value.categoria}
+                    precoProduto={value.preco} />
+              </Grid>)
 }
 
 export default function HomePage(props) {
@@ -196,21 +214,17 @@ export default function HomePage(props) {
             return (<ErrComponent messageDefault='Ophs, ocorreu um erro ao carregar os produtos.' err={produtoResponseApi.err} />);
         } else {
             return (
-                <Grid container justify="center" alignItems="flex-start" style={{marginTop: 8}}>
-                    <Grid item container direction="column" xs={12} md={9} lg={6}>   
-                        <InfiniteScroll
-                            pageStart={0}
-                            loadMore={ () => getProdutosFromApi(produtoResponseApi.accessToken)}
-                            hasMore={produtoResponseApi.hasMore}
-                            loader={<CircularProgress size={18} style={{position:'absolute', left:'50%', marginLeft: -20, marginBottom: 20}}/>}>
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={ () => getProdutosFromApi(produtoResponseApi.accessToken)}
+                    hasMore={produtoResponseApi.hasMore}
+                    loader={<CircularProgress size={18} style={{position:'absolute', left:'50%', marginLeft: -20, marginBottom: 20}}/>}>
+                    {
+                        <Grid container justify="flex-start" alignItems="flex-start" style={{marginTop: 8, marginBottom: 8}}>
                             {produtoResponseApi.listProduto.map( (value, index) => renderProdutoItem(value, index) )}
-                        </InfiniteScroll>   
-                        { produtoResponseApi.err && 
-                            (<ErrComponent messageDefault='Ophs, ocorreu um erro ao carregar os produtos.' err={produtoResponseApi.err} />)
-                        }
-                        <Typography style={{marginTop: 16, marginBottom: 8}} variant='caption' color='textSecondary'><b>@Lubeasy 2020</b></Typography>            
-                    </Grid>
-                </Grid>
+                        </Grid>
+                    }
+                </InfiniteScroll>
             );
         }
     }

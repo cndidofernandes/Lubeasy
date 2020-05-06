@@ -1,25 +1,26 @@
 import React from 'react';
 import { makeStyles, useTheme } from "@material-ui/styles";
 import { Grid, Typography, Button } from '@material-ui/core';
-import TransparentAppBarWithBackButton from "../customComponents/TransparentAppBarWithBackButton";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Fab from '@material-ui/core/Fab';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import DialogForPayment from "../customComponents/Dialog/DialogForPayment";
-import PropTypes from 'prop-types';
 import ErrComponent from "../customComponents/Err";
 import { domain_api } from "../../utils/ApiConfig";
 
 import {useParams} from 'react-router-dom'
 
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import HeadsetIcon from '@material-ui/icons/Headset';
 
 import axios from "axios";
 
 import PHPdateTime from "./../../utils/PHPdateTime";
 import RecommendedProdutosHorizontal from '../customComponents/RecommendedProdutosHorizontal';
 import PictureStepper from '../customComponents/PictureStepper';
-
+import AppBarWithBackButton from "../customComponents/AppBarWithBackButton";
+import Chip from "@material-ui/core/Chip";
+import Box from "@material-ui/core/Box";
+import grey from '@material-ui/core/colors/grey';
 
 const useStyle = makeStyles( (theme) => ({
   flyer:{
@@ -58,78 +59,123 @@ const useStyle = makeStyles( (theme) => ({
   fab: {
     position: 'fixed',
     bottom: 25,
-    textTransform: 'none'
+    textTransform: 'none',
+  },
+  chip: {
+    margin: theme.spacing(0.5, 1, 0.5, 0),
+  },
+  gridMain: {
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: 32,
+    },
+  },
+  titleRecommendItens: {
+    marginLeft: 16,
+    fontWeight: 'bold',
+    [theme.breakpoints.up('sm')]: {
+      margin: theme.spacing(4, 0, 1, 0),
+    },
+  },
+  recommendItens: {
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: 32
+    },
   },
 }));
 
-function Header(props){
-  //const bull = <span className={props.classes.bullet}>•</span>;
-
-  return (
-    <>
-        <PictureStepper images={[{label: props.titulo, imgPath: props.capa}, {label: props.titulo, imgPath: props.contracapa}]}/>
-        <div style={{margin: 16, marginTop: 8}}>
-          
-          <div style={{display: 'flex', flexGrow: 1, justifyContent: 'flex-end'}}>
-            <Typography variant={'caption'} style={{fontWeight: 'bold', marginLeft: 8}} color='secondary' children={props.tags} />
-            {/*<Typography variant={'body2'} style={{alignSelf: 'flex-end', fontWeight: 'bold'}} color='secondary' children={'Por '+props.preco+' Kz'} />*/}
-          </div>
-
-          <Typography variant={'h6'} style={{marginTop: 4, fontWeight: 'bold'}} children={props.titulo} />
-          <Typography variant={'body2'} color={'textSecondary'} children={props.autor} />
-          <Typography variant={'body2'} style={{marginTop: 16}} children={props.tipo+' • '+props.estilo} />
-          <Typography variant="body2" style={{marginTop: 4}} align='justify' color={'textSecondary'}>{props.descricao}</Typography>
-
-          <Button href={`${props.previa}`} target='_blank' disabled={!props.previa} variant='contained' startIcon={<ArrowDownwardIcon />} style={{marginTop: 24}} color={'secondary'} size='small' disableElevation>Baixar uma amostra</Button>
-
-          <Typography variant="body2" style={{marginTop: 24}} color={'textSecondary'}>Publicado em {PHPdateTime('d m Y', props.dataDePublicacao)}, por @Lubeasy</Typography>
-        </div>
-    </>
-  )
-}
-
 function MainContentProduto(props){
   const classes = useStyle();
-  const theme = useTheme();
   const [openDialogForPayment, setOpenDialogForPayment] = React.useState(false);
-  
 
   const onCloseDialogForPayment = () => setOpenDialogForPayment(false);
+  const matadados = props.data.metadados.split(';');
 
   return (
-    <Grid style={{background: '#fff'}} container direction="column" justify="center" alignItems="center" >
+    <Grid className={classes.gridMain} container direction={'column'}>
 
-        <Grid xs={12} lg={10} item style={{background: '#fff', paddingBottom: 20}}>
-          <Header classes={classes} theme={theme} {...props.data}  /> 
-          <RecommendedProdutosHorizontal tipo={`${props.data.tipo}s`} by='estilo' data={props.data.estilo} uuidProduto={props.data.uuid} />
+      <Grid container justify={'center'}>
+        <Grid item xs={12} sm={5} md={4} xl={2}>
+          <PictureStepper images={[
+              {label: props.data.titulo, imgPath: props.data.capa},
+              {label: props.data.titulo, imgPath: props.data.contracapa}]} />
         </Grid>
-        <Grid xs={12} lg={10} item style={{background: '#fff'}}>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <DialogForPayment 
-                open={openDialogForPayment} 
-                handleClose={onCloseDialogForPayment}
-                produtoOrder ={{
-                  idProduto: props.data.id, 
-                  uuidProduto: props.data.uuid,
-                  titulo: props.data.titulo,
-                  autor: props.data.autor,
-                  categoria: props.data.categoria,
-                  preco: props.data.preco,
-                }}  />  
+
+        <Grid item xs={12} sm={6} md={5} xl={3} style={{padding: 16}}>
+          <Typography variant={'h6'} style={{fontWeight: 'bold', marginTop: 8}} children={props.data.titulo} />
+          <Typography variant={'body2'} color={'textSecondary'} children={props.data.autor} />
+          <Typography variant={'body2'} style={{marginTop: 16}} children={props.data.tipo+' • '+props.data.estilo} />
+
+          <Typography variant="body2" style={{marginTop: 4}} align='justify' color={'textSecondary'}>{props.data.descricao}</Typography>
+
+          <Box my={3} py={1} px={2}
+               display="flex" flexDirection="column" alignItems="center"
+               borderRadius={8} borderColor="grey.100" border={1}
+               style={{marginBottom: 16}}>
+
+            <div style={{display: 'flex', width: '100%'}}>
+              <Typography style={{alignSelf: 'flex-start', flexGrow: 1}}
+                          variant={'caption'}
+                          color={'textSecondary'}
+                          children={matadados[0]} />
+
+              <Button style={{alignSelf: 'flex-end', padding: 0, textTransform: 'none'}}
+                      href={`${props.data.previa}`} target='_blank'
+                      disabled={!props.data.previa} variant='text'
+                      startIcon={props.data.categoria !== 0 ? <VisibilityIcon /> : <HeadsetIcon />}
+                      color={'secondary'}
+                      size='small'
+                      disableElevation>{props.data.categoria !== 0 ? 'Ver' : 'Ouvir'} uma amostra</Button>
+            </div>
+
+            <Typography variant={'h6'} style={{marginTop: 16, color: '#515149'}}><b>{props.data.preco} Kz</b></Typography>
+            <Button style={{margin: 8, marginLeft: 24, marginRight: 24, marginBottom: 16}}
+                    variant={'contained'}
+                    color={'primary'}
+                    size={'medium'}
+                    disableElevation
+                    fullWidth
+                    startIcon={<ShoppingCartIcon />}
+                    onClick={() => setOpenDialogForPayment(true)}
+                    children={'Comprar '+props.data.tipo}/>
+          </Box>
+
+          <Box>
+            {props.data.tags.split(' ').map( (value, index) => (<Chip key={index} className={classes.chip} label={value} />))}
+          </Box>
+
         </Grid>
-        <Fab
-            variant="extended"
-            size="medium"
-            color="secondary"
-            aria-label="buy" 
-            className={classes.fab}
-            onClick={ () => setOpenDialogForPayment(true)} >
-            Comprar a {props.data.preco} Kz
-        </Fab>
+      </Grid>
+
+      <Grid container justify={'center'}>
+        <Grid item xs={12} sm={11} md={9} xl={5}>
+
+          <Typography className={classes.titleRecommendItens} variant="subtitle1" children={'Também podes gostar de'}/>
+          <RecommendedProdutosHorizontal style={classes.recommendItens}
+                                         by='estilo'
+                                         data={props.data.estilo}
+                                         uuidProduto={props.data.uuid}/>
+
+        </Grid>
+      </Grid>
+
+      <Grid xs={12} lg={10} item style={{background: '#fff'}}>
+        <br/>
+        <br/>
+        <br/>
+        <DialogForPayment
+            open={openDialogForPayment}
+            handleClose={onCloseDialogForPayment}
+            produtoOrder ={{
+              idProduto: props.data.id,
+              uuidProduto: props.data.uuid,
+              titulo: props.data.titulo,
+              autor: props.data.autor,
+              categoria: props.data.categoria,
+              preco: props.data.preco,
+            }}  />
+      </Grid>
+
+
     </Grid>
   );
 }
@@ -180,37 +226,9 @@ export default function DetalheProdutoPage(props) {
 
   
   return (
-    <div style={{flex: 'display'}}>
-      <TransparentAppBarWithBackButton />
-      {getDynamicContent()}
+    <div style={{flex: 'display', background: '#fff'}}>
+        <AppBarWithBackButton titulo={networkObj.data ? networkObj.data.titulo :'Buscando...'}/>
+        {getDynamicContent()}
     </div>
   );
-}
-
-Header.propTypes = {
-  capa: PropTypes.string.isRequired,
-  contracapa: PropTypes.string.isRequired,
-  classes: PropTypes.any.isRequired,  
-  theme: PropTypes.any.isRequired,
-  titulo: PropTypes.string.isRequired,
-  estilo: PropTypes.string.isRequired,
-  descricao: PropTypes.string.isRequired,
-  autor: PropTypes.string.isRequired,
-  tipo: PropTypes.string.isRequired,
-  preco: PropTypes.number.isRequired,
-  precoVip: PropTypes.number,
-}
-
-Header.defaultProps = {
-    capa: 'https://i.pinimg.com/originals/23/34/5a/23345a0edaeee4970432812c2c34d647.jpg',
-    contracapa: 'https://previews.123rf.com/images/ninalisitsyna/ninalisitsyna2003/ninalisitsyna200300625/142381711-minimal-vector-coverage-cover-design-for-electronic-music-festival-abstract-sound-wave-cover-layout-.jpg',
-    titulo: 'Caos (Mixtape)',
-    autor: 'Desconhecido',
-    tipo: 'Mixtape',
-    preco: 190,
-    precoPromocao: 120,
-    descricao: 'O uso do StepButtonaqui demonstra rótulos de etapas clicáveis, além de definir o completed sinalizador. No entanto, como as etapas podem ser acessadas de maneira...',
-    dataCriacao:'desconhecido',
-    metadados:'lorem upson orealam grupom saldane melarousy eacet, lorem upson orealam grupom saldane melarousy eacet \n lorem upson orealam grupom saldane melarousy eacet',
-    estilo:'Rap/Hip hop',
 }

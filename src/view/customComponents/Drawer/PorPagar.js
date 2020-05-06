@@ -29,7 +29,7 @@ export default function DrawerBottomPaymentInfo({open, handleCloseDrawer, priceT
             onClose = {handleCloseDrawer}>
             
             <Box m={2} textAlign={'center'} fontFamily="fontFamily" fontWeight={550} fontSize={"h6.fontSize"}>
-                Você ainda não pagou pelo seu download
+                Você ainda não pagou o seu download? Pague já!
             </Box>
 
             <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
@@ -47,7 +47,6 @@ export default function DrawerBottomPaymentInfo({open, handleCloseDrawer, priceT
             <Typography className={classes.textoResponsivo} style={{marginTop: 1, marginLeft: 16, marginRight: 16}}>
                 <b>Total a pagar:</b> {priceToPay} Kz
             </Typography>
-            
             
             <Button onClick={handleCloseDrawer} style={{boxShadow: 'none', margin: 16, color: '#fff'}} variant='contained' color='secondary'>Entendi</Button>
             

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Box, Button } from '@material-ui/core';
+import { Typography, Box } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
+import CardMedia from "@material-ui/core/CardMedia";
 
 export default function RecommendItem(props) {
   const history = useHistory();
@@ -11,13 +12,19 @@ export default function RecommendItem(props) {
   }
 
   return (
-    <Box style={{width: 140, marginRight: 8}} my={1} bgcolor='background.paper'>
-        <img style={{width: 140, height: 140}} src={props.capa} alt={props.titulo} />
-        <Box m={0.4}>
-            <Typography variant='subtitle1'>{props.titulo}</Typography>
-            <Typography variant='body2' color='secondary'>{props.preco} Kz</Typography>            
+    <Box style={{width: 160, marginRight: 10}}
+         onClick={onClickRecommendItem} my={1}
+         bgcolor='background.paper'
+         borderRadius={4}
+         borderColor="grey.100"
+         border={1}>
+        <CardMedia style={{width: 158,height: 210}} image={props.capa} title={props.titulo} />
+        <Box m={0.8}>
+            <Typography variant='subtitle2' noWrap>{props.titulo}</Typography>
+            <Typography variant='caption' color='secondary' style={{marginTop: 8}}>{props.preco} Kz</Typography>
         </Box>
-        <Button style={{marginTop: 4}} onClick={onClickRecommendItem} color='secondary' variant='outlined' disableElevation size='small' fullWidth>comprar</Button>
+        {/*<Button style={{marginTop: 4}} onClick={onClickRecommendItem} color='secondary' variant='outlined'
+                 disableElevation size='small' fullWidth>comprar</Button>*/}
     </Box>
   );
 }

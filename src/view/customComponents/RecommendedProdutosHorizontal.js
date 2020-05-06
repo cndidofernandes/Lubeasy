@@ -3,8 +3,8 @@ import axios from "axios";
 
 import { Typography, CircularProgress } from '@material-ui/core';
 
+import styles from './RecommendedProdutosHorizontal.module.css'
 
-import ErrComponent from "./Err";
 import RecommendItem from './RecommendItem';
 import { domain_api } from "../../utils/ApiConfig";
 
@@ -43,7 +43,7 @@ export default function RecommendedProdutosHorizontal(props) {
   const MainContent = ({listProdutoRecommended}) => {
     return (
       <>
-            <div style={{display: 'flex', overflowY: 'scroll', paddingLeft: 16, paddingRight: 16}}>
+            <div className={styles.mainContent}>
               {listProdutoRecommended.map( (value, index) => renderRecommendItem(value, index) )}
             </div>
       </>
@@ -64,11 +64,11 @@ export default function RecommendedProdutosHorizontal(props) {
       
 
       if (networkObj.err.response) {
-        elementErr = <Typography variant='body2' color='textSecondary' style={{marginTop: 8, marginLeft: 16}}>{networkObj.err.status === 401 ? messageUnauthorization : networkObj.err.response.data.description}</Typography>
+        elementErr = <Typography variant='body2' color='textSecondary' style={{marginTop: 8,}}>{networkObj.err.status === 401 ? messageUnauthorization : networkObj.err.response.data.description}</Typography>
       }else if (networkObj.err.request) {
-        elementErr = <Typography variant='body2' color='textSecondary' style={{marginTop: 8, marginLeft: 16}}>{'Ophs, estamos com problemas na conexão com o servidor, por favor verifique a sua conexão com internet.'}</Typography>  
+        elementErr = <Typography variant='body2' color='textSecondary' style={{marginTop: 8,}}>{'Ophs, estamos com problemas na conexão com o servidor, por favor verifique a sua conexão com internet.'}</Typography>
       }else {
-        elementErr = <Typography variant='body2' color='textSecondary' style={{marginTop: 8, marginLeft: 16}}>{'Ophs, ocorreu um erro desconhecido.'}</Typography>
+        elementErr = <Typography variant='body2' color='textSecondary' style={{marginTop: 8,}}>{'Ophs, ocorreu um erro desconhecido.'}</Typography>
       }
       
       return elementErr;
@@ -81,13 +81,5 @@ export default function RecommendedProdutosHorizontal(props) {
     getProdutoRecommendedFromApi();
   }, []);
 
-  return (
-    <>
-      <Typography variant="subtitle1" style={{marginTop: 24, marginLeft: 16, fontWeight: 'bold'}}>{ `${props.tipo} semelhantes`}</Typography>
-      {getDynamicContent()}
-    </>
-
-  )
-  
-
+  return getDynamicContent();
 }

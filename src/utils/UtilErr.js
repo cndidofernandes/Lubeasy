@@ -10,7 +10,7 @@ export function getErrDescriptionLoginInPT(err) {
             return 'Email ou senha inválidos.';
         
         case 'password_leaked':
-            return 'Esta senha foi vazou e precisa ser altera.';
+            return 'Esta senha vazou e precisa ser altera.';
         
         case 'PasswordStrengthError':
             return 'A senha fornecida não corresponde aos requisitos de força da conexão.';
@@ -31,13 +31,13 @@ export function getErrDescriptionSignUpInPTByCode(code, description) {
     switch (code) {
     
         case 'invalid_signup':
-            return 'O nome de usúario ou email já foram utilizados.';
+            return 'O nome de usúario ou email já foram utilizados na criação de uma conta. Por favor utilize outro email ou nome de usúario.';
         
         case 'invalid_password':
-            return 'A senha utilizada é muito fraca. Por favor tente outra.';
+            return 'A senha utilizada é muito fraca. Por favor, tente outra colocando alguns símbolos, letras e números.';
 
         case 'missing_property':
-            return 'O nome de usuário apenas pode ter caracteres alfanuméricos e os seguintes caracteres: _, +, -,. ,!, #, $, ^, ~ e @.';    
+            return 'Nome de usuário inválido. O nome de usuário não pode conter espaços nem acentuação.';
 
         default:
             return description;

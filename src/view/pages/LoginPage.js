@@ -13,7 +13,7 @@ import TextFieldCustom from '../customComponents/TextField';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import blueGrey from '@material-ui/core/colors/blueGrey';
-import appLogotipo from '../../assets/logo.png';
+import appLogotipo from '../../assets/full_logo.png';
 import withStyles from "@material-ui/core/styles/withStyles";
 import {Auth0} from "../../utils/Auth-spa";
 import auth0Client from '../../utils/Auth-js';
@@ -142,20 +142,21 @@ export default function LoginPage(props) {
             <Toolbar/>
             <Toolbar/>
 
-            <Grid container  justify='center' alignItems='center'>
-                <Grid item>
-                    <CircularLogo src={appLogotipo}/>
-                </Grid>
-            </Grid>
-            <Grid container justify='center' alignItems='center'>
-                <Grid item xs={10} md={3}>
+
+            <Grid container justify='center' alignItems='center' direction={'column'}>
+
+                <Grid item xs={12} md={3} style={{padding: 16, paddingBottom: 24}}>
+                    <Box style={{marginBottom: 32}} display="flex" justifyContent={'center'}>
+                        <img src={appLogotipo} />
+                    </Box>
+
                     <form autoComplete="off" onSubmit={handleBtSignIn}>
-                        <TextFieldCustom 
+                        <TextFieldCustom
                             icon={<AccountCircle color='secondary'/>}
                             propsBox={{my:4}}
                             propsInputBase={{disabled: formSubmiting, placeholder: 'Email', type: 'email', required: true, onChange: handleChange('email')}} />
 
-                        <Box my={5} className={classes.searchBar} borderRadius={100}>
+                        <Box my={3.5} className={classes.searchBar} borderRadius={100}>
                             <IconButton>
                                 <LockIcon color='secondary'/>
                             </IconButton>
@@ -179,7 +180,7 @@ export default function LoginPage(props) {
                         </Box>
                         <Grid container justify='center' alignItems='center'>
                             <Box mx={'auto'} textAlign='center'>
-                                <DisablableButton color='secondary' disabled={formSubmiting} type="submit" variant={'contained'} style={{boxShadow: 'none', minWidth: 300}}>Entrar</DisablableButton>
+                                <DisablableButton color='primary' disabled={formSubmiting} type="submit" variant={'contained'} style={{boxShadow: 'none', minWidth: 300}}>Entrar</DisablableButton>
                                 <br/>
                                 <br/>
                                 <LinkCustom disabled={formSubmiting} path='signup' text='Ainda não tenho uma conta'/>

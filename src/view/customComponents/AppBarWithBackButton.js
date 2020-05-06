@@ -7,12 +7,18 @@ import {makeStyles} from "@material-ui/core/styles/";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import grey from "@material-ui/core/colors/grey";
 
 const useStyles = makeStyles(theme=>({
     appBar:{
         top:0,
         left:0,
-        background: '#FFFF'
+        color:'black',
+        background: '#FFFFFF',
+        boxShadow: 'none',
+        borderBottomStyle: 'solid',
+        borderBottomWidth: 1,
+        borderBottomColor: grey[100]
     },
     iconButton: {
         marginRight: theme.spacing(2)
@@ -39,15 +45,16 @@ export default function AppBarWithBackButton(props) {
     }
 
     return (
-        <AppBar className={classes.appBar} position={"static"} style={{color:'black', background: '#FFFFFF', boxShadow:'none'}}>
+        <AppBar className={classes.appBar}
+                position={"static"}
+                style={{color:'black', background: '#FFFFFF', boxShadow: 'none'}}>
             <Toolbar>
-                
                 <IconButton disabled={props.disabled ? props.disabled : false} onClick={handleButtonBack} edge={'start'} className={classes.iconButton}>
                     <ArrowBackIosRoundedIcon/>
                 </IconButton>
             
-                <Typography className={classes.titulo} variant={'h6'}>
-                    <b>{props.titulo}</b>
+                <Typography className={classes.titulo} variant={'subtitle1'} style={{color: '#515149'}}>
+                    {props.titulo}
                 </Typography>
             </Toolbar>
         </AppBar>
