@@ -96,7 +96,7 @@ export default function ProdutoItem(props) {
                   size="small" label={props.tipoProduto}
                   color={'primary'}
                   icon={getIconOfEstiloByCategoria(props.categoriaProduto)} />
-            <Typography variant='subtitle1'><b>{props.nomeProduto}</b></Typography>
+            <Typography noWrap variant='subtitle1'><b>{props.nomeProduto}</b></Typography>
             <Typography variant="body2" noWrap color="textSecondary">{props.autorProduto}</Typography>
             <Typography variant="caption" color="secondary"><b>{props.precoProduto} Kz</b></Typography>
           </div>
