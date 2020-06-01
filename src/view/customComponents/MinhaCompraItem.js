@@ -18,13 +18,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
 
-import {Auth0} from "../../utils/Auth-spa";
 
 import PHPdateTime from "./../../utils/PHPdateTime";
 
 import { domain_api } from "../../utils/ApiConfig";
 import axios from "axios";
-import { Button } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
@@ -100,11 +98,11 @@ export default function MinhaCompraItem(props) {
 
                 setTimeout(() => {
                     props.handleCloseBackDropDownload();
-                }, 3000);
+                }, 5000);
                 
             })
             .catch(function (error) {
-                console.log('failure');
+                props.handleCloseBackDropDownload();
             });
 
         }else{

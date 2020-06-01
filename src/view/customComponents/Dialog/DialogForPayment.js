@@ -54,9 +54,9 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
     },
     title: {
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(1.2),
         flex: 1,
-        color:'black'
+        color: '#515149',
     },
     espaco:{
         margin: theme.spacing(2)
@@ -119,9 +119,7 @@ function GetStepContent({step, formPaymentValue, handleChange, onClickFormPay, i
             return (
                 <div>
                     <RadioGroup aria-label="forma_pagamento" name="forma_pagamento" value={formPaymentValue} onChange={handleChange}>
-                        <FormControlLabel value="Transferência Bancária" control={<Radio />} label="Transferência Bancária" />
-                        <FormControlLabel value="disabled" disabled control={<Radio />} label="Kamba" />
-                        <FormControlLabel value="disabled" disabled control={<Radio />} label="Code" />
+                        <FormControlLabel value="Kamba" control={<Radio />} label="Kamba - Carteira Virtual" />
                     </RadioGroup>
                     <DisablableButton disabled={isLoading} 
                                       onClick={onClickFormPay}
@@ -139,8 +137,6 @@ function GetStepContent({step, formPaymentValue, handleChange, onClickFormPay, i
 
 function VerticalLinearStepper({produtoOrder}) {
     const classes = useStyles();
-    console.log(produtoOrder);
-    
 
     const [networkObj, setNetworkObj] = React.useState({
         isLoading: false,
@@ -148,16 +144,18 @@ function VerticalLinearStepper({produtoOrder}) {
         err: null
     });
 
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
     const [activeStep, setActiveStep] = React.useState(0);
     
-    const [formPaymentValue, setFormPaymentValue] = React.useState('Transferência Bancária');
+    const [formPaymentValue, setFormPaymentValue] = React.useState('Kamba');
     
     const steps = getSteps();
     
 
     const handleChange = event => {
-        setFormPaymentValue(event.target.value)    
-        
+        setFormPaymentValue(event.target.value)
     };
 
     const savePaymentInApi = (accessToken) => {
@@ -169,16 +167,20 @@ function VerticalLinearStepper({produtoOrder}) {
                 idProdutoDigital: produtoOrder.idProduto,
                 formaDePagamento: formPaymentValue
             },
-            headers: {Authorization: 'Bearer '+accessToken}
+            headers: {Authorization: 'Bearer '+accessToken},
+            cancelToken: source.token,
           })
           .then(function (response) {
               if(response.status === 201){
-                setActiveStep(2);
-                setNetworkObj({isLoading: false, data: response.data, err: null});
+                  setActiveStep(2);
+                  setNetworkObj({isLoading: false, data: response.data, err: null});
               } 
               
           })
           .catch(function (error) {
+              if (axios.isCancel(error)) {
+                  return;
+              }
               setNetworkObj({...networkObj, isLoading: false, err: error});
           });
     }
@@ -194,9 +196,15 @@ function VerticalLinearStepper({produtoOrder}) {
             });
         }).catch(function (error) {
             setNetworkObj({...networkObj, isLoading: false, err: {request: {}}});
-        });;
+        });
         
     };
+
+    React.useEffect(function(){
+        return () => {
+            source.cancel('Request Cancel Detalhe');
+        }
+    }, [0]);
 
     const handleNext = () => {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -244,7 +252,10 @@ function VerticalLinearStepper({produtoOrder}) {
             */}
             {(activeStep === steps.length || networkObj.err != null) && ( 
                     <>
-                        <DrawerBottomPaymentInfo errInfo={networkObj.err} open={true} priceToPay={produtoOrder.preco} />
+                        <DrawerBottomPaymentInfo errInfo={networkObj.err}
+                                                 open={true}
+                                                 priceToPay={produtoOrder.preco}
+                                                 hashTagDownload={ networkObj.data ? networkObj.data.hashtag_da_compra : 0}/>
                     </>)
             }
             
@@ -268,7 +279,7 @@ export default function DialogPayment({open, handleClose, produtoOrder}) {
                         <IconButton edge="start" style={{color: 'black'}} onClick={handleClose} aria-label="close">
                             <CloseIcon />
                         </IconButton>
-                        <Typography variant="h6" className={classes.title}>
+                        <Typography variant="subtitle1" className={classes.title}>
                             Pedido de compra
                         </Typography>
                     </Toolbar>

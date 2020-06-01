@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const renderMinhasComprasItem = (value, idx, accessToken, handlers) => {
-    return (<MinhaCompraItem key={(idx)}
+    return (<MinhaCompraItem key={(value.id)}
                     id={value.id}
                     titulo={value.titulo} 
                     autor={value.autor} 
@@ -179,6 +179,9 @@ export default function MinhasComprasPage(props) {
         err: null
     });
 
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
     const handleChangeTabValue = (event, newTabValue) => {
         setTabValue(newTabValue);
     };
@@ -197,6 +200,7 @@ export default function MinhasComprasPage(props) {
                 page: downloadResponseApi.page+1,
                 pageSize: downloadResponseApi.pageSize
             },
+            cancelToken: source.token,
         })
             .then(function (response) {
                 setDownloadResponseApi({
@@ -208,6 +212,10 @@ export default function MinhasComprasPage(props) {
                 });
             })
             .catch(function (error) {
+                if (axios.isCancel(error)) {
+                    console.log('Request canceled', error);
+                    return;
+                }
                 setDownloadResponseApi({...downloadResponseApi, hasMore: false, err: error});
             });
     }
@@ -221,6 +229,10 @@ export default function MinhasComprasPage(props) {
         }).catch(function (error) {
             setDownloadResponseApi({...downloadResponseApi, err: {request: 'Ophs, ocorreu um erro ao se conectar com o servidor'}});
         });
+
+        return () => {
+            source.cancel('Request Cancel Minhas');
+        }
 
     }, []);
 
@@ -253,14 +265,14 @@ export default function MinhasComprasPage(props) {
                 index={tabValue}
                 onChangeIndex={() => handleChangeIndexTabValue(tabValue)}
             >
-                <TabPanelMinhasCompras subheader='Aqui aparecerão os produtos que você não pagou:'
+                <TabPanelMinhasCompras subheader='Downloads por pagar:'
                                        downloadResponseApi={downloadResponseApi}
                                        setDownloadResponseApi={setDownloadResponseApi}
                                        getMyDownloadsFromApi={getMyDownloadsFromApi}
                                        value={tabValue} index={0}
                                        dir={theme.direction} />
 
-                <TabPanelMinhasCompras subheader='Aqui aparecerão os produtos que você pagou:'
+                <TabPanelMinhasCompras subheader='Downloads pagos:'
                                        downloadResponseApi={downloadResponseApi}
                                        setDownloadResponseApi={setDownloadResponseApi}
                                        getMyDownloadsFromApi={getMyDownloadsFromApi}
@@ -271,17 +283,3 @@ export default function MinhasComprasPage(props) {
         </>
     );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

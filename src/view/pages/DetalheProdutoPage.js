@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, useTheme } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
 import { Grid, Typography, Button } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -14,13 +14,13 @@ import HeadsetIcon from '@material-ui/icons/Headset';
 
 import axios from "axios";
 
-import PHPdateTime from "./../../utils/PHPdateTime";
 import RecommendedProdutosHorizontal from '../customComponents/RecommendedProdutosHorizontal';
 import PictureStepper from '../customComponents/PictureStepper';
 import AppBarWithBackButton from "../customComponents/AppBarWithBackButton";
 import Chip from "@material-ui/core/Chip";
 import Box from "@material-ui/core/Box";
-import grey from '@material-ui/core/colors/grey';
+import DialogLogin from "../customComponents/Dialog/DialogLogin";
+import {useSelector} from "react-redux";
 
 const useStyle = makeStyles( (theme) => ({
   flyer:{
@@ -70,15 +70,16 @@ const useStyle = makeStyles( (theme) => ({
     },
   },
   titleRecommendItens: {
-    marginLeft: 16,
     fontWeight: 'bold',
+    marginLeft: 16,
     [theme.breakpoints.up('sm')]: {
       margin: theme.spacing(4, 0, 1, 0),
     },
   },
   recommendItens: {
-    [theme.breakpoints.up('sm')]: {
-      paddingLeft: 32
+    margin: theme.spacing(0, 1, 0, 1),
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(4, 0, 1, 0),
     },
   },
 }));
@@ -86,9 +87,16 @@ const useStyle = makeStyles( (theme) => ({
 function MainContentProduto(props){
   const classes = useStyle();
   const [openDialogForPayment, setOpenDialogForPayment] = React.useState(false);
+  const [openDialogLogin, setOpenDialogLogin] = React.useState(false);
 
   const onCloseDialogForPayment = () => setOpenDialogForPayment(false);
+  const onCloseDialogLogin = () => setOpenDialogLogin(false);
+
   const matadados = props.data.metadados.split(';');
+
+  const isAuthenticated = useSelector((state) =>{
+    return state.isAuthenticated
+  });
 
   return (
     <Grid className={classes.gridMain} container direction={'column'}>
@@ -116,7 +124,7 @@ function MainContentProduto(props){
               <Typography style={{alignSelf: 'flex-start', flexGrow: 1}}
                           variant={'caption'}
                           color={'textSecondary'}
-                          children={matadados[0]} />
+                          children={matadados[0] === null ? matadados[0] : ''} />
 
               <Button style={{alignSelf: 'flex-end', padding: 0, textTransform: 'none'}}
                       href={`${props.data.previa}`} target='_blank'
@@ -128,14 +136,14 @@ function MainContentProduto(props){
             </div>
 
             <Typography variant={'h6'} style={{marginTop: 16, color: '#515149'}}><b>{props.data.preco} Kz</b></Typography>
-            <Button style={{margin: 8, marginLeft: 24, marginRight: 24, marginBottom: 16}}
+            <Button style={{margin: 8, marginLeft: 24, marginRight: 24, marginBottom: 24}}
                     variant={'contained'}
                     color={'primary'}
                     size={'medium'}
                     disableElevation
                     fullWidth
                     startIcon={<ShoppingCartIcon />}
-                    onClick={() => setOpenDialogForPayment(true)}
+                    onClick={ () => {isAuthenticated ? setOpenDialogForPayment(true) : setOpenDialogLogin(true)}}
                     children={'Comprar '+props.data.tipo}/>
           </Box>
 
@@ -149,11 +157,8 @@ function MainContentProduto(props){
       <Grid container justify={'center'}>
         <Grid item xs={12} sm={11} md={9} xl={5}>
 
-          <Typography className={classes.titleRecommendItens} variant="subtitle1" children={'Também podes gostar de'}/>
-          <RecommendedProdutosHorizontal style={classes.recommendItens}
-                                         by='estilo'
-                                         data={props.data.estilo}
-                                         uuidProduto={props.data.uuid}/>
+          <Typography className={classes.titleRecommendItens} variant="subtitle1" children={'Também podes gostar de'} />
+          <RecommendedProdutosHorizontal by='estilo' data={props.data.estilo} uuidProduto={props.data.uuid}/>
 
         </Grid>
       </Grid>
@@ -162,17 +167,24 @@ function MainContentProduto(props){
         <br/>
         <br/>
         <br/>
-        <DialogForPayment
-            open={openDialogForPayment}
-            handleClose={onCloseDialogForPayment}
-            produtoOrder ={{
-              idProduto: props.data.id,
-              uuidProduto: props.data.uuid,
-              titulo: props.data.titulo,
-              autor: props.data.autor,
-              categoria: props.data.categoria,
-              preco: props.data.preco,
-            }}  />
+        {
+          isAuthenticated
+              ?
+              <DialogForPayment
+                  open={openDialogForPayment}
+                  handleClose={onCloseDialogForPayment}
+                  produtoOrder ={{
+                    idProduto: props.data.id,
+                    uuidProduto: props.data.uuid,
+                    titulo: props.data.titulo,
+                    autor: props.data.autor,
+                    categoria: props.data.categoria,
+                    preco: props.data.preco,
+                  }}  />
+              :
+              <DialogLogin open={openDialogLogin} location={props.location} handleClose={onCloseDialogLogin} onSucess={()=>{}}/>
+        }
+
       </Grid>
 
 
@@ -181,7 +193,7 @@ function MainContentProduto(props){
 }
 
 export default function DetalheProdutoPage(props) {
-  const uuidProdutoDigital = useParams().uuid;  
+  const uuidProdutoDigital = useParams().uuid;
 
   const [networkObj, setNetworkObj] = React.useState({
     isLoading: true,
@@ -189,17 +201,22 @@ export default function DetalheProdutoPage(props) {
     err: null
   });
 
+  const CancelToken = axios.CancelToken;
+  const source = CancelToken.source();
+
   const getProdutoFromApi = (idProduto) => {
     axios({
       baseURL: domain_api,
       url: '/produto/'+uuidProdutoDigital,
-      method: 'get'
+      method: 'get',
+      cancelToken: source.token,
     })
     .then(function (response) {
       setNetworkObj({isLoading: false, data: response.data, err: null});
     })
     .catch(function (error) {
-        setNetworkObj({...networkObj, isLoading: false, err: error});
+      if (axios.isCancel(error)) return;
+      setNetworkObj({...networkObj, isLoading: false, err: error});
     });
   }
 
@@ -215,12 +232,13 @@ export default function DetalheProdutoPage(props) {
 
   React.useEffect(function(){
 
-    setNetworkObj({
-      isLoading: true,
-      data: null,
-      err: null
-    });
+    setNetworkObj({isLoading: true, data: null, err: null});
+
     getProdutoFromApi(uuidProdutoDigital);
+
+    return () => {
+      source.cancel('Request Cancel Detalhe');
+    }
     
   }, [props]);
 

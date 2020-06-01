@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -13,8 +12,7 @@ import TextFieldCustom from '../customComponents/TextField';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import blueGrey from '@material-ui/core/colors/blueGrey';
-import appLogotipo from '../../assets/full_logo.png';
-import withStyles from "@material-ui/core/styles/withStyles";
+import appLogotipo from '../../assets/logo.png';
 import {Auth0} from "../../utils/Auth-spa";
 import auth0Client from '../../utils/Auth-js';
 import { parseQueryResult } from "../../utils/UtilAuth0";
@@ -25,12 +23,12 @@ import { getErrDescriptionLoginInPT } from "../../utils/UtilErr";
 
 import Cookies from 'universal-cookie';
 
-const CircularLogo = withStyles(theme => ({
+/*const CircularLogo = withStyles(theme => ({
     root: {
         width: 100,
         height: 100
     },
-}))(Avatar);
+}))(Avatar);*/
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -147,18 +145,18 @@ export default function LoginPage(props) {
 
                 <Grid item xs={12} md={3} style={{padding: 16, paddingBottom: 24}}>
                     <Box style={{marginBottom: 32}} display="flex" justifyContent={'center'}>
-                        <img src={appLogotipo} />
+                        <img src={appLogotipo} width={65} height={65} alt={'logo-app'} />
                     </Box>
 
                     <form autoComplete="off" onSubmit={handleBtSignIn}>
                         <TextFieldCustom
-                            icon={<AccountCircle color='secondary'/>}
-                            propsBox={{my:4}}
+                            icon={<AccountCircle />}
+                            propsBox={{my:3}}
                             propsInputBase={{disabled: formSubmiting, placeholder: 'Email', type: 'email', required: true, onChange: handleChange('email')}} />
 
-                        <Box my={3.5} className={classes.searchBar} borderRadius={100}>
+                        <Box my={3} className={classes.searchBar} borderRadius={100}>
                             <IconButton>
-                                <LockIcon color='secondary'/>
+                                <LockIcon />
                             </IconButton>
                             <InputBase disabled={formSubmiting} className={classes.input} placeholder={'Senha'}
                             id="adornment-password"
@@ -173,7 +171,7 @@ export default function LoginPage(props) {
                                     onClick={handleClickShowPassword}
                                     onMouseDown={handleMouseDownPassword}
                                 >
-                                    {values.showPassword ? <Visibility color='secondary' /> : <VisibilityOff color='secondary'/>}
+                                    {values.showPassword ? <Visibility color='secondary' /> : <VisibilityOff />}
                                 </IconButton>
                                 </InputAdornment>
                             }/>
@@ -181,7 +179,6 @@ export default function LoginPage(props) {
                         <Grid container justify='center' alignItems='center'>
                             <Box mx={'auto'} textAlign='center'>
                                 <DisablableButton color='primary' disabled={formSubmiting} type="submit" variant={'contained'} style={{boxShadow: 'none', minWidth: 300}}>Entrar</DisablableButton>
-                                <br/>
                                 <br/>
                                 <LinkCustom disabled={formSubmiting} path='signup' text='Ainda não tenho uma conta'/>
                             </Box>

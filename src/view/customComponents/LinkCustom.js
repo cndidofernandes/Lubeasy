@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   link: {
-    color: '#515149',
+    color: theme.palette.secondary.main,
     textDecoration: 'none',
   } 
 }));

@@ -44,3 +44,24 @@ export function updateUser(user) {
 
 }
 
+export function becomeClienteAutor(onSuccess, onFailure) {
+
+    Auth0().then((auth0) => {
+        auth0.getTokenSilently().then((accessToken) => {
+            axios({
+                baseURL: domain_api,
+                url: '/cliente/autor',
+                method: 'post',
+                headers: {Authorization: 'Bearer '+accessToken},
+            }).then(function (response) {
+                onSuccess(response);
+            }).catch(function (error) {
+                onFailure(error);
+            });
+        });
+    }).catch(function (error) {
+        onFailure(error);
+    });
+
+}
+

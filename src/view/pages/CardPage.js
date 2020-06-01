@@ -35,7 +35,7 @@ export default function (props) {
                               disabledAction={props.disabledAction}
                               secondary={<>
                                   <Typography variant="body2" component="span" color="primary">
-                                      935457646 / 943738027
+                                      948280007
                                   </Typography>
                                   
                               </>

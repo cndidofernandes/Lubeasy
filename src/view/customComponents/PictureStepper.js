@@ -7,7 +7,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import CardMedia from "@material-ui/core/CardMedia";
 
-const images = [
+/*const images = [
   {
     label: 'San Francisco – Oakland Bay Bridge, United States',
     imgPath:
@@ -33,7 +33,7 @@ const images = [
     imgPath:
       'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
   },
-];
+];*/
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,7 +60,7 @@ function PictureStepper(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [heightOfImg, setHeightOfImg] = React.useState(window.innerWidth);
+  //const [heightOfImg, setHeightOfImg] = React.useState(window.innerWidth);
   const maxSteps = props.images.length;
 
   /*React.useEffect(() => {

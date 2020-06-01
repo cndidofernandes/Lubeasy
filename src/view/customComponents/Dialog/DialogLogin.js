@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 
-import LoginPage from "../pages/LoginPage";
+import LoginPage from "../../pages/LoginPage";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -17,7 +17,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function DialogSignInParceiro({open, location, handleClose, onSucess}) {
-
 
     return (
         <div>
@@ -27,13 +26,13 @@ export default function DialogSignInParceiro({open, location, handleClose, onSuc
                         <IconButton edge="start" style={{color: 'black'}} onClick={handleClose} aria-label="close">
                             <CloseIcon />
                         </IconButton>
-                        <Typography variant="h6" style={{marginLeft: 16, flex: 1, color:'black'}}>
+                        <Typography variant="subtitle1" style={{marginLeft: 16, flex: 1, color: '#515149'}}>
                             Faça primeiro o login
                         </Typography>
                     </Toolbar>
                 </AppBar>
 
-                <LoginPage location={location} redirectUrl={'/evento'}/>
+                <LoginPage location={location} redirectUrl={'/produto'}/>
 
             </Dialog>
             

@@ -10,14 +10,16 @@ import {makeStyles} from '@material-ui/core/styles';
 
 import { useHistory } from "react-router-dom";
 
-import { BFA_ACCOUNT_INFO } from "../../../utils/config/DadosBancarios";
+import qrcodeKamba from '../../../assets/MyQrImageKamba.jpg';
+
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
     textoResponsivo: {
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('sm')]: {
             textAlign: 'center',
         },
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.only('xs')]: {
             textAlign: 'justify',
         },
     },
@@ -44,7 +46,58 @@ const ContentErr = ({errInfo, handleClose}) => {
     )
 }
 
-const ContentSuccess = ({priceToPay}) => {
+const ContentSuccess = ({priceToPay, hashTagDownload = 0}) => {
+    let classes = useStyles();
+    let history = useHistory();
+
+    return (
+        <>
+            <br/>
+            <Box textAlign={'center'} fontSize={60} color={'textSecondary'}>
+                <CheckCircleRoundedIcon style={{color: '#00e700'}} fontSize={'inherit'}/>
+            </Box>
+            <Box textAlign={'center'} mx={1} fontFamily="fontFamily" fontWeight={550} fontSize={"h6.fontSize"}>
+                O pedido de compra do produto foi efectuado com sucesso.
+            </Box>
+
+            <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
+                Primeiro passo concluído! Agora, utilize o link ou Código Qr abaixo, para pagar o produto e usufruir o máximo dele:
+            </Typography>
+
+            <Typography align={'center'} style={{marginTop: 8, marginLeft: 16, marginRight: 16}}>
+                <Link
+                    href="https://www.usekamba.com/u/lubeasy_startup"
+                    target={'_blank'}
+                    rel="noreferrer">
+                    https://www.usekamba.com/u/lubeasy_startup
+                </Link>
+            </Typography>
+
+            <Box display={'flex'} justifyContent={'center'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
+                <img src={qrcodeKamba} width={160} height={160} />
+            </Box>
+
+            <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
+                <b>Hashtag do seu download: </b>#{hashTagDownload}
+            </Typography>
+            <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 1, marginLeft: 16, marginRight: 16}}>
+                <b>Valor á pagar: </b>{priceToPay} Kz
+            </Typography>
+
+            <Typography className={classes.textoResponsivo} variant='caption' color={'textSecondary'} style={{marginTop: 16, marginLeft: 16, marginRight: 16, marginBottom: 16}}>
+                OBS: Não se esqueça de adicionar na descrição do pagamento a hashtag(<b>#{hashTagDownload}</b>) do seu download.
+            </Typography>
+
+            <Typography className={classes.textoResponsivo} variant='body2' style={{marginTop: 6, marginLeft: 16, marginRight: 16}}>
+                Tem alguma dúvida de como fazer o pagamento? <a href="#https://www.w3schools.com/" target="_blank">Clique aqui</a>
+            </Typography>
+
+            <Button onClick={() => history.replace('/meusdownloads')} style={{margin: 16}} variant='contained' color='primary' disableElevation>IR PARA AS MINHAS COMPRAS</Button>
+        </>
+    )
+}
+
+/*const ContentSuccess = ({priceToPay}) => {
     let classes = useStyles();
     let history = useHistory();
 
@@ -81,16 +134,13 @@ const ContentSuccess = ({priceToPay}) => {
             <Button onClick={() => history.replace('/meusdownloads')} style={{margin: 16}} variant='contained' color='primary' disableElevation>IR PARA AS MINHAS COMPAR</Button>
         </>
     )
-} 
+} */
 
 
-export default function DrawerBottomPaymentInfo({errInfo, open, priceToPay}) {
+export default function DrawerBottomPaymentInfo({errInfo, open, priceToPay, hashTagDownload}) {
 
     var [openInner, setOpenInner] = React.useState(open) 
     const handleClose = () => setOpenInner(false);
-
-    console.log(errInfo, openInner);
-    
 
     return (
         <SwipeableDrawer
@@ -98,7 +148,7 @@ export default function DrawerBottomPaymentInfo({errInfo, open, priceToPay}) {
             open={openInner}
             onOpen={ () => {}}
             onClose={handleClose}>
-            {errInfo ? <ContentErr errInfo={errInfo} handleClose={handleClose} /> : <ContentSuccess priceToPay={priceToPay}/>}
+            {errInfo ? <ContentErr errInfo={errInfo} handleClose={handleClose} /> : <ContentSuccess priceToPay={priceToPay} hashTagDownload={hashTagDownload}/>}
         </SwipeableDrawer>
     );
 }

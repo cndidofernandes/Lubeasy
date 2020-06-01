@@ -18,7 +18,7 @@ export function callIsAuthentication() {
 export function callGetUser() {
     return (dispatch) => {
         getUser().then( (value) => {
-            if (value['https://other.info.user/loginsCount'] <= 2) updateUser(value);
+            if (value['https://other.info.user/loginsCount'] <= 20) updateUser(value);
 
             dispatch({type: 'GET_USER', user: value ? value : null});
         }).catch(function () {

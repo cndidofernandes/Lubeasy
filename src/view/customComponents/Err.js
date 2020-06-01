@@ -15,23 +15,22 @@ export default function Err(props) {
     var elementIcon = null;
 
     if (err.response) {
-        elementErr = <Box m={1} fontSize="subtitle1.fontSize" textAlign="center">{err.response.status === 401 ? messageUnauthorization : err.response.data.description}</Box>
+        elementErr = <Box m={1} fontSize="body1.fontSize" textAlign="center">{err.response.status === 401 ? messageUnauthorization : err.response.data.description}</Box>
     }else if (err.request) {
-        elementErr = <Box m={1} fontSize="subtitle1.fontSize" textAlign="center">{'Ophs, estamos com problemas na conexão com o servidor, por favor verifique a sua conexão com internet.'}</Box>
+        elementErr = <Box m={1} fontSize="body1.fontSize" textAlign="center">{'Ophs, estamos com problemas na conexão com o servidor, por favor verifique a sua conexão com internet.'}</Box>
         elementIcon = <WifiOffIcon color='secondary'/>
     }else {
-        elementErr = <Box m={1} fontSize="subtitle1.fontSize" textAlign="center">{'Ophs, ocorreu um erro desconhecido.'}</Box>
+        elementErr = <Box m={1} fontSize="body1.fontSize" textAlign="center">{'Ophs, ocorreu um erro desconhecido.'}</Box>
     }
 
     return (
-        <Grid container direction="column" justify="center" alignItems="center" style={{marginTop: 16}}>
+        <Grid container direction="column" justify="center" alignItems="center" style={{marginTop: 32}}>
             <Grid>
                 {elementIcon}
             </Grid>
             <Grid item>   
                 {elementErr}
             </Grid>
-            
         </Grid>
     );
 }

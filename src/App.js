@@ -19,7 +19,6 @@ import { callIsAuthentication, callGetUser } from "./redux/actions/AuthThunkActi
 import { ThemeProvider } from '@material-ui/styles';
 import ThemeApp from './view/ThemeApp'
 import { BrowserRouter as Router, Switch,  Route} from 'react-router-dom';
-import EstatisticasDeDownload from "./view/pages/EstatisticasDeDownload";
 
 
 function ContentApp() {
@@ -31,15 +30,14 @@ function ContentApp() {
                     <PrivateRoute exact path={'/'} component={HomePage} />
                     <PrivateRoute path={'/home'} component={HomePage} />
                     <PrivateRoute path={'/meusdownloads'} component={MinhasComprasPage} />
+                    <PrivateRoute path={'/about'} component={AboutPage} />
 
                     <PublicRoute path={'/login'} component={LoginPage} />
                     <PublicRoute path={'/accountcreated'} component={AccountCreatedPage} />
                     <PublicRoute path={'/signup'} component={SignUpPage} />
 
                     <Route path={'/callback'} component={CallbackPage} />
-                    <Route path={'/about'} component={AboutPage} />
                     <Route path={'/produto/:uuid'} component={DetalheProdutoPage} />
-                    <Route path={'/autor/:uuidAutor/produto/:uuidProduto'} component={EstatisticasDeDownload} />
                     <Route component={NotFoundPage} />
                 </Switch>
             </Router>
@@ -48,6 +46,7 @@ function ContentApp() {
 }
 
 function App(){
+
     const dispatch = useDispatch();
 
     //ComponentDidMount

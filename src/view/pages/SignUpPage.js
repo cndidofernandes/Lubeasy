@@ -157,13 +157,13 @@ export default function SignUpPage(props) {
                 </Paper>
                 <Paper className={classes.paper} elevation={0}>
                     <form autoComplete="off" onSubmit={criarConta}>
-                        <TextFieldCustom disabled={formSubmiting} icon={<PersonIcon color='secondary'/>} propsInputBase={{type: 'text', required: true, placeholder: 'Primerio e último nome', onChange: handleChange('name')}} />
-                        <TextFieldCustom disabled={formSubmiting} icon={<PersonIcon color='secondary'/>} propsInputBase={{type: 'text', required: true, placeholder: 'Nome de usúario', onChange: handleChange('user_name')}} />
-                        <TextFieldCustom disabled={formSubmiting} icon={<EmailIcon color='secondary'/>} propsInputBase={{type: 'email', required: true, placeholder: 'Email', onChange: handleChange('email')}} />
-                        <TextFieldCustom disabled={formSubmiting} icon={<PhoneIcon color='secondary'/>} propsInputBase={{type: 'tel',  required: true, placeholder: 'Número de telefone', onChange: handleChange('phone'), inputProps: {pattern: '[0-9]{3}[0-9]{3}[0-9]{3}'}, startAdornment: (<InputAdornment position="start">+244</InputAdornment>)}} />
+                        <TextFieldCustom disabled={formSubmiting} icon={<PersonIcon />} propsInputBase={{type: 'text', required: true, placeholder: 'Primerio e último nome', onChange: handleChange('name')}} />
+                        <TextFieldCustom disabled={formSubmiting} icon={<PersonIcon />} propsInputBase={{type: 'text', required: true, placeholder: 'Nome de usúario', onChange: handleChange('user_name')}} />
+                        <TextFieldCustom disabled={formSubmiting} icon={<EmailIcon />} propsInputBase={{type: 'email', required: true, placeholder: 'Email', onChange: handleChange('email')}} />
+                        <TextFieldCustom disabled={formSubmiting} icon={<PhoneIcon />} propsInputBase={{type: 'tel',  required: true, placeholder: 'Número de telefone', onChange: handleChange('phone'), inputProps: {pattern: '[0-9]{3}[0-9]{3}[0-9]{3}'}, startAdornment: (<InputAdornment position="start">+244</InputAdornment>)}} />
                         <Box className={classes.searchBar} borderRadius={100}>
                             <IconButton disabled={formSubmiting}>
-                                <LockIcon color='secondary'/>
+                                <LockIcon />
                             </IconButton>
                             <InputBase disabled={formSubmiting} className={classes.input} placeholder={'Senha'}
                                 id="adornment-password"
@@ -175,7 +175,7 @@ export default function SignUpPage(props) {
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
-                                            {values.showPassword ? <VisibilityIcon color='secondary'/> : <VisibilityOffIcon color='secondary'/>}
+                                            {values.showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                         </IconButton>
                                     </InputAdornment> }/>
                         </Box>

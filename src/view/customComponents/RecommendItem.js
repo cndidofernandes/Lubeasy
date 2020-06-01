@@ -12,13 +12,13 @@ export default function RecommendItem(props) {
   }
 
   return (
-    <Box style={{width: 160, marginRight: 10}}
+    <Box style={{width: 172, marginRight: 8, display: 'inline-block'}}
          onClick={onClickRecommendItem} my={1}
          bgcolor='background.paper'
          borderRadius={4}
-         borderColor="grey.100"
+         borderColor="grey.200"
          border={1}>
-        <CardMedia style={{width: 158,height: 210}} image={props.capa} title={props.titulo} />
+        <CardMedia style={{width: 170,height: 210}} image={props.capa} title={props.titulo} />
         <Box m={0.8}>
             <Typography variant='subtitle2' noWrap>{props.titulo}</Typography>
             <Typography variant='caption' color='secondary' style={{marginTop: 8}}>{props.preco} Kz</Typography>

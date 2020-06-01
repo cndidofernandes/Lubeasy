@@ -1,11 +1,22 @@
 {
   "short_name": "Lubeasy",
   "name": "Lubeasy",
+  "description": "Um aplicativo web para vendas de produtos digitais.",
   "icons": [
     {
-      "src": "favicon.png",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "favicon.ico",
+      "sizes": "24x24 16x16",
       "type": "image/x-icon"
+    },
+    {
+      "src": "logo32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "logo64.png",
+      "sizes": "64x64",
+      "type": "image/png"
     },
     {
       "src": "logo192.png",
@@ -20,6 +31,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ffb300",
+  "theme_color": "#0090FF",
   "background_color": "#ffffff"
 }

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
@@ -14,11 +13,9 @@ import VideocamIcon from '@material-ui/icons/Videocam';
 import DescriptionIcon from '@material-ui/icons/Description';
 import ImageIcon from '@material-ui/icons/Image';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 
 import { useHistory } from "react-router-dom";
-import { Box, Button } from '@material-ui/core';
 
 import DialogForPayment from "../customComponents/Dialog/DialogForPayment";
 
@@ -90,7 +87,7 @@ export default function ProdutoItem(props) {
     <>
       <Card className={classes.card} elevation={0}>
         <CardActionArea onClick={onClickProdutoItem}>
-          <CardMedia className={classes.cover} image={props.imagemProduto} title={props.nomeProduto} />
+          <CardMedia className={classes.cover} image={props.imagemProduto} title={props.nomeProduto} component={'img'}/>
           <div className={classes.cardContent}>
             <Chip style={{alignSelf: 'flex-end', marginBottom: 2}}
                   size="small" label={props.tipoProduto}
