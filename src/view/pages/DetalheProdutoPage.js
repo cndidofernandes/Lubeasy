@@ -84,6 +84,15 @@ const useStyle = makeStyles( (theme) => ({
   },
 }));
 
+const formatoProduto = {
+  CURSO_ONLINE: 0,
+  AUDIO: 1,
+  WEBNARIO: 2,
+  EBOOK: 3,
+  FICHEIRO: 4,
+  SERVICO_POR_ASSINATURA: 5,
+}
+
 function MainContentProduto(props){
   const classes = useStyle();
   const [openDialogForPayment, setOpenDialogForPayment] = React.useState(false);
@@ -92,26 +101,35 @@ function MainContentProduto(props){
   const onCloseDialogForPayment = () => setOpenDialogForPayment(false);
   const onCloseDialogLogin = () => setOpenDialogLogin(false);
 
-  const matadados = props.data.metadados.split(';');
-
   const isAuthenticated = useSelector((state) =>{
     return state.isAuthenticated
   });
+
+  const getArrayOfImagesToPictureStepper = () => {
+    if(props.data.contracapa){
+      return [
+          {label: props.data.titulo, imgPath: props.data.capa},
+          {label: props.data.titulo, imgPath: props.data.contracapa}
+        ]
+    }else{
+      return [
+          {label: props.data.titulo, imgPath: props.data.capa}
+      ]
+    }
+  }
 
   return (
     <Grid className={classes.gridMain} container direction={'column'}>
 
       <Grid container justify={'center'}>
         <Grid item xs={12} sm={5} md={4} xl={2}>
-          <PictureStepper images={[
-              {label: props.data.titulo, imgPath: props.data.capa},
-              {label: props.data.titulo, imgPath: props.data.contracapa}]} />
+          <PictureStepper images={getArrayOfImagesToPictureStepper()} />
         </Grid>
 
         <Grid item xs={12} sm={6} md={5} xl={3} style={{padding: 16}}>
           <Typography variant={'h6'} style={{fontWeight: 'bold', marginTop: 8}} children={props.data.titulo} />
           <Typography variant={'body2'} color={'textSecondary'} children={props.data.autor} />
-          <Typography variant={'body2'} style={{marginTop: 16}} children={props.data.tipo+' • '+props.data.estilo} />
+          <Typography variant={'body2'} style={{marginTop: 16}} children={props.data.tipo} />
 
           <Typography variant="body2" style={{marginTop: 4}} align='justify' color={'textSecondary'}>{props.data.descricao}</Typography>
 
@@ -121,18 +139,14 @@ function MainContentProduto(props){
                style={{marginBottom: 16}}>
 
             <div style={{display: 'flex', width: '100%'}}>
-              <Typography style={{alignSelf: 'flex-start', flexGrow: 1}}
-                          variant={'caption'}
-                          color={'textSecondary'}
-                          children={matadados[0] === null ? matadados[0] : ''} />
 
               <Button style={{alignSelf: 'flex-end', padding: 0, textTransform: 'none'}}
                       href={`${props.data.previa}`} target='_blank'
                       disabled={!props.data.previa} variant='text'
-                      startIcon={props.data.categoria !== 0 ? <VisibilityIcon /> : <HeadsetIcon />}
+                      startIcon={props.data.formato !== formatoProduto.AUDIO ? <VisibilityIcon /> : <HeadsetIcon />}
                       color={'secondary'}
                       size='small'
-                      disableElevation>{props.data.categoria !== 0 ? 'Ver' : 'Ouvir'} uma amostra</Button>
+                      disableElevation>{props.data.formato !== formatoProduto.AUDIO ? 'Ver' : 'Ouvir'} uma amostra</Button>
             </div>
 
             <Typography variant={'h6'} style={{marginTop: 16, color: '#515149'}}><b>{props.data.preco} Kz</b></Typography>
@@ -158,7 +172,7 @@ function MainContentProduto(props){
         <Grid item xs={12} sm={11} md={9} xl={5}>
 
           <Typography className={classes.titleRecommendItens} variant="subtitle1" children={'Também podes gostar de'} />
-          <RecommendedProdutosHorizontal by='estilo' data={props.data.estilo} uuidProduto={props.data.uuid}/>
+          {/*<RecommendedProdutosHorizontal by='estilo' data={props.data.estilo} uuidProduto={props.data.uuid}/>*/}
 
         </Grid>
       </Grid>
@@ -178,7 +192,7 @@ function MainContentProduto(props){
                     uuidProduto: props.data.uuid,
                     titulo: props.data.titulo,
                     autor: props.data.autor,
-                    categoria: props.data.categoria,
+                    formato: props.data.formato,
                     preco: props.data.preco,
                   }}  />
               :

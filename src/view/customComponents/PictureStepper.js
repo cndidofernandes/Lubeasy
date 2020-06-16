@@ -61,19 +61,8 @@ function PictureStepper(props) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   //const [heightOfImg, setHeightOfImg] = React.useState(window.innerWidth);
+
   const maxSteps = props.images.length;
-
-  /*React.useEffect(() => {
-    window.addEventListener("resize", updateWindowDimensions);
-
-    return () => {
-        window.removeEventListener("resize", updateWindowDimensions);
-    };
-  });*/
-
-  /*const updateWindowDimensions = () => {
-    setHeightOfImg(window.innerWidth);
-  };*/
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

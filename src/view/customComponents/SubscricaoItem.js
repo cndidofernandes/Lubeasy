@@ -18,6 +18,7 @@ import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { useHistory } from "react-router-dom";
 
 import DialogForPayment from "../customComponents/Dialog/DialogForPayment";
+import PHPdateTime from "../../utils/PHPdateTime";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -50,7 +51,7 @@ export default function ProdutoAssinadosItem(props) {
   const history = useHistory();
 
   const onClickProdutoItem = (e) => {
-    history.push(`/assinatura/${props.id}/${props.nomeProduto}`);
+    history.push(`/subscricao/${props.id}/${props.nomeProduto}`);
   }
 
   return (
@@ -64,7 +65,7 @@ export default function ProdutoAssinadosItem(props) {
                    color={'primary'}/>*/}
             <Typography noWrap variant='subtitle1'><b>{props.nomeProduto}</b></Typography>
             <Typography variant="body2" noWrap color="textSecondary">{props.autorProduto}</Typography>
-            <Typography style={{marginTop: 4}} variant="caption" color="textSecondary">Termino da assinatura: {props.dataDePagamento}</Typography>
+            <Typography style={{marginTop: 4}} variant="caption" color="textSecondary">Termino da subscrição: {PHPdateTime('d-M-Y', props.endOfSubscription)}</Typography>
           </div>
         </CardActionArea>
       </Card>
@@ -78,7 +79,7 @@ ProdutoAssinadosItem.propTypes = {
   autorProduto: PropTypes.string.isRequired,  
   tipoProduto: PropTypes.string.isRequired,  
   precoProduto: PropTypes.number.isRequired,
-  categoriaProduto: PropTypes.number.isRequired 
+  formatoProduto: PropTypes.number.isRequired
 }
 
 ProdutoAssinadosItem.defaultProps = {
@@ -87,5 +88,5 @@ ProdutoAssinadosItem.defaultProps = {
   autorProduto: 'Autor',
   tipoProduto: 'Podcast',
   precoProduto: '199 Akz',
-  categoriaProduto: 0
+  formatoProduto: 0
 }

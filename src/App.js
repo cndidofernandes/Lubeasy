@@ -5,11 +5,14 @@ import {PublicRoute} from "./view/customComponents/PublicRoute";
 
 import HomePage from './view/pages/HomePage';
 import DetalheProdutoPage from './view/pages/DetalheProdutoPage';
+import MinhasSubscricoesPage from './view/pages/MinhasSubscricoesPage';
+import SubscricaoPage from './view/pages/SubscricaoPage';
 import MinhasComprasPage from './view/pages/MinhasComprasPage';
 import SignUpPage from './view/pages/SignUpPage';
 import LoginPage from './view/pages/LoginPage';
 import NotFoundPage from './view/pages/NotFoundPage';
 import CallbackPage from "./view/pages/CallbackPage";
+import ProdutoCompradoPage from "./view/pages/ProdutoCompradoPage";
 import AccountCreatedPage from "./view/pages/AccountCreatedPage";
 import SplashScreenPage from "./view/pages/SplashScreenPage";
 import AboutPage from "./view/pages/AboutPage";
@@ -29,7 +32,9 @@ function ContentApp() {
                 <Switch>
                     <PrivateRoute exact path={'/'} component={HomePage} />
                     <PrivateRoute path={'/home'} component={HomePage} />
-                    <PrivateRoute path={'/meusdownloads'} component={MinhasComprasPage} />
+                    <PrivateRoute path={'/minhas-compras'} component={MinhasComprasPage} />
+                    <PrivateRoute path={'/minhas-subscricoes'} component={MinhasSubscricoesPage} />
+                    <PrivateRoute path={'/subscricao/:idSubscricao/:nomeDaSubscricao'} component={SubscricaoPage} />
                     <PrivateRoute path={'/about'} component={AboutPage} />
 
                     <PublicRoute path={'/login'} component={LoginPage} />
@@ -37,6 +42,7 @@ function ContentApp() {
                     <PublicRoute path={'/signup'} component={SignUpPage} />
 
                     <Route path={'/callback'} component={CallbackPage} />
+                    <Route path={'/produto-comprado/:idCompra/produto/:idProduto'} component={ProdutoCompradoPage} />
                     <Route path={'/produto/:uuid'} component={DetalheProdutoPage} />
                     <Route component={NotFoundPage} />
                 </Switch>

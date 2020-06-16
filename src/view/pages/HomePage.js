@@ -21,6 +21,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import InfoIcon from '@material-ui/icons/Info';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import axios from "axios";
@@ -99,8 +100,12 @@ function AppBarHome(props) {
         })
     }
 
-    const listenerMyTicketsClick = () => {
-        props.history.push('/meusdownloads');
+    const listenerMyComprasClick = () => {
+        props.history.push('/minhas-compras');
+    }
+
+    const listenerSubscricoesClick = () => {
+        props.history.push('/minhas-subscricoes');
     }
 
     const listenerLogoutClick = () => {
@@ -132,8 +137,15 @@ function AppBarHome(props) {
                             <Box display={'flex'} alignItems={'center'} mx={'auto'}>
                                 <Button
                                         variant='text' size={'small'}
-                                        onClick={listenerMyTicketsClick}
+                                        onClick={listenerMyComprasClick}
                                         children={'Minhas compras'} />
+
+                                <Button
+                                    variant='text' size={'small'}
+                                    onClick={listenerSubscricoesClick}
+                                    style={{marginLeft: 8}}
+                                    children={'Subscrições'} />
+
                                 <Button
                                         variant='text' size={'small'}
                                         onClick={listenerAboutClick}
@@ -169,11 +181,17 @@ function AppBarHome(props) {
                                         </ListItemAvatar>
                                         <ListItemText primary={props.nameUser} secondary={props.emailUser} />
                                     </ListItem>
-                                    <ListItem button onClick={listenerMyTicketsClick}>
+                                    <ListItem button onClick={listenerMyComprasClick}>
                                         <ListItemAvatar>
                                             <ShoppingBasketIcon />
                                         </ListItemAvatar>
                                         <ListItemText primary="Minhas compras" />
+                                    </ListItem>
+                                    <ListItem button onClick={listenerSubscricoesClick}>
+                                        <ListItemAvatar>
+                                            <SubscriptionsIcon />
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Subscrições" />
                                     </ListItem>
                                     <ListItem button onClick={listenerAboutClick}>
                                         <ListItemAvatar>
@@ -214,7 +232,7 @@ const renderProdutoItem = (value, idx) => {
                     nomeProduto={value.titulo}
                     autorProduto={value.autor}
                     tipoProduto={value.tipo}
-                    categoriaProduto={value.categoria}
+                    formatoProduto={value.formato}
                     precoProduto={value.preco} />
               </Grid>)
 }
@@ -297,7 +315,7 @@ export default function HomePage(props) {
                 getProdutosFromApi(accessToken);
             });
         }).catch(function (error) {
-            setProdutoResponseApi({...produtoResponseApi, err: {request: 'É um erro do auth0'}});
+            setProdutoResponseApi({...produtoResponseApi, err: {request: 'Ocorreu um erro, por favor, recarregue a página'}});
         });
 
         return () => {

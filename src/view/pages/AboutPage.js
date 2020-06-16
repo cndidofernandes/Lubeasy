@@ -8,19 +8,26 @@ import DisablableButton from "../customComponents/DisablableButton";
 import {becomeClienteAutor} from "../../services/Cliente";
 import PageSnackBar from "../customComponents/PageSnackBar";
 
+import { useSelector } from 'react-redux';
+import DialogWithConfirmation from '../customComponents/Dialog/DialogWithConfirmation';
+
 export default function AboudPage(props) {
     const [isBecomingClienteAutor, setIsBecomingClienteAutor] = React.useState(false);
     const [snackBarOpened, setSnackBarOpened] = React.useState(false);
     const [messageSnackBar, setMessageSnackBar] = React.useState(null);
 
+    const {name, email} = useSelector((stateApp) => {
+        return stateApp.getUser;
+    });
+
     const onClickBecomeClienteAutorButton = () => {
         setIsBecomingClienteAutor(true);
 
-        becomeClienteAutor( (response) => {
+        becomeClienteAutor({name, email}, (response) => {
 
             setIsBecomingClienteAutor(false);
             setSnackBarOpened(true);
-            setMessageSnackBar('O seu pedido foi realizado com sucesso em breve nós entraremos em contacto consigo. Obrigado.');
+            setMessageSnackBar('O seu pedido foi realizado com sucesso. Nós enviamos um email para si com as suas credencias de acesso.');
 
         }, (error) => {
 

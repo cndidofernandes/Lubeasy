@@ -7,22 +7,13 @@ import AppBar from "@material-ui/core/AppBar";
 import {makeStyles} from "@material-ui/core/styles";
 import grey from "@material-ui/core/colors/grey";
 
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ErrComponent from "../customComponents/Err";
 import InfiniteScroll from "react-infinite-scroller";
 import {Auth0} from "../../utils/Auth-spa";
 import axios from "axios";
 import {domain_api} from "../../utils/ApiConfig";
-import ProdutoItem from "../customComponents/ProdutoItem";
-import ProdutoAssinadosItem from "../customComponents/ProdutoAssinadoItem";
+import SubscricaoItem from "../customComponents/SubscricaoItem";
 
 const useStyles = makeStyles((theme) => ({
     appBar:{
@@ -52,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const renderProdutoItem = (value, idx) => {
     return ( <Grid key={value.id} item xs={6} sm={4} md={3} xl={2}>
-        <ProdutoAssinadosItem
+        <SubscricaoItem
             id={value.id}
             uuid={value.uuid}
             imagemProduto={value.capa}
@@ -60,12 +51,12 @@ const renderProdutoItem = (value, idx) => {
             autorProduto={value.autor}
             tipoProduto={value.tipo}
             formatoProduto={value.formato}
-            dataDePagamento={value.dataDoPagamento} />
+            endOfSubscription={value.endOfSubscription} />
     </Grid>)
 }
 
 
-export default function MeusProdutosPorAssinatura(props) {
+export default function MinhasSubscricoesPage(props) {
     const classes = useStyles();
 
     const [produtoAssinadosResponseApi, setProdutoAssinadosResponseApi] = React.useState({
@@ -84,7 +75,7 @@ export default function MeusProdutosPorAssinatura(props) {
 
         axios({
             baseURL: domain_api,
-            url: '/produto/assinados',
+            url: '/produto/subscricao',
             method: 'get',
             headers: {Authorization: 'Bearer '+accessToken},
             params: {
@@ -156,7 +147,7 @@ export default function MeusProdutosPorAssinatura(props) {
                         <ArrowBackIosRoundedIcon/>
                     </IconButton>
                     <Typography variant={'subtitle1'} style={{color: '#515149'}}>
-                        Minhas assinaturas
+                        Minhas subscrições
                     </Typography>
                 </Toolbar>
             </AppBar>

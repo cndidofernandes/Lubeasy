@@ -12,8 +12,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import DescriptionIcon from '@material-ui/icons/Description';
-import ImageIcon from '@material-ui/icons/Image';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import BookIcon from '@material-ui/icons/Book';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
 
 
 import Slide from '@material-ui/core/Slide';
@@ -63,24 +65,39 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function ProdutoOrderItem({categoria, titulo, autor, preco }) {
+const formatoProduto = {
+    CURSO_ONLINE: 0,
+    AUDIO: 1,
+    WEBNARIO: 2,
+    EBOOK: 3,
+    FICHEIRO: 4,
+    SERVICO_POR_ASSINATURA: 5,
+}
 
-    const getIconOfEstiloByCategoria = (categoria) => {
+function ProdutoOrderItem({formato, titulo, autor, preco }) {
 
-        switch (categoria) {
-        
-          //Music
-          case 0: 
+    const getIconOfEstiloByFormato = (formato) => {
+
+        switch (formato) {
+
+          case formatoProduto.AUDIO:
             return (<MusicNoteIcon style={{color: '#fff',margin: 9}} />);
-          //Video
-          case 1:
+
+          case formatoProduto.CURSO_ONLINE:
             return (<VideocamIcon style={{color: '#fff',margin: 9}} />);
-          //Image
-          case 2:
-            return (<ImageIcon style={{color: '#fff',margin: 9}} />);
-          //Docs
-          case 3:  
-            return (<DescriptionIcon style={{color: '#fff',margin: 9}} />);
+
+          case formatoProduto.WEBNARIO:
+              return (<VideocamIcon style={{color: '#fff',margin: 9}} />);
+
+          case formatoProduto.FICHEIRO:
+            return (<InsertDriveFileIcon style={{color: '#fff',margin: 9}} />);
+
+          case formatoProduto.SERVICO_POR_ASSINATURA:
+              return (<SubscriptionsIcon style={{color: '#fff',margin: 9}} />);
+
+          case formatoProduto.EBOOK:
+            return (<BookIcon style={{color: '#fff',margin: 9}} />);
+
           default:         
             return (<ErrorOutlineIcon style={{color: '#fff',margin: 9}} />);
           
@@ -90,7 +107,7 @@ function ProdutoOrderItem({categoria, titulo, autor, preco }) {
     return (
         <div style={{display: 'flex', alignItems: 'center', marginTop: 8,marginBottom: 8}} >
             <Box m={1} display="flex" alignItems="center" justifyContent="center" bgcolor='primary.dark' borderRadius='50%'>
-                {getIconOfEstiloByCategoria(categoria)}
+                {getIconOfEstiloByFormato(formato)}
             </Box>
             <div style={{width: '75%', whiteSpace: 'nowrap', flexGrow: 1}}>
                 <Box fontSize="subtitle1.fontSize" textOverflow="ellipsis" overflow="hidden">
@@ -152,7 +169,6 @@ function VerticalLinearStepper({produtoOrder}) {
     const [formPaymentValue, setFormPaymentValue] = React.useState('Kamba');
     
     const steps = getSteps();
-    
 
     const handleChange = event => {
         setFormPaymentValue(event.target.value)
@@ -161,11 +177,12 @@ function VerticalLinearStepper({produtoOrder}) {
     const savePaymentInApi = (accessToken) => {
         axios({
             baseURL: domain_api,
-            url: '/download',
+            url: '/compra',
             method: 'post',
             data: {
                 idProdutoDigital: produtoOrder.idProduto,
-                formaDePagamento: formPaymentValue
+                formaDePagamento: formPaymentValue,
+                isSubscription: produtoOrder.formato === formatoProduto.SERVICO_POR_ASSINATURA,
             },
             headers: {Authorization: 'Bearer '+accessToken},
             cancelToken: source.token,

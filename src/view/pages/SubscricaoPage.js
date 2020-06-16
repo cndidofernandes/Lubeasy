@@ -22,7 +22,7 @@ import {Auth0} from "../../utils/Auth-spa";
 import axios from "axios";
 import {domain_api} from "../../utils/ApiConfig";
 import ProdutoItem from "../customComponents/ProdutoItem";
-import ProdutoAssinadosItem from "../customComponents/ProdutoAssinadoItem";
+import ProdutoAssinadosItem from "../customComponents/SubscricaoItem";
 import {useParams} from "react-router-dom";
 import PHPdateTime from "../../utils/PHPdateTime";
 
@@ -53,19 +53,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function ConteudoAssinaturaItem(props) {
+function ConteudoDaSubscricaoItem(props) {
 
     const handleOpenContentClickButton = () => {
-        const link = document.createElement('a');
-        link.href = props.urlContent;
-        document.body.appendChild(link);
-        link.click();
-        link.parentNode.removeChild(link);
+        if (props.urlContent){
+            const link = document.createElement('a');
+            link.href = props.urlContent;
+            link.title = 'Abrir conteúdo';
+            link.target = '_blank';
+            link.rel = 'noopener';
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+        }
     }
 
     return (
         <Card style={{marginBottom: 16, marginLeft: 4, marginRight: 4}} elevation={0}>
-            <CardActionArea>
+            <CardActionArea onClick={handleOpenContentClickButton}>
                 <CardMedia
                     component="img"
                     style={{height: 200}}
@@ -106,7 +111,7 @@ function ConteudoAssinaturaItem(props) {
 const renderProdutoItem = (value, idx) => {
     return (
         <Grid key={value.id} item xs={12} sm={6} md={3} xl={2}>
-            <ConteudoAssinaturaItem
+            <ConteudoDaSubscricaoItem
                 id={value.id}
                 titulo={value.titulo}
                 autor={value.autor}
@@ -118,10 +123,10 @@ const renderProdutoItem = (value, idx) => {
 }
 
 
-export default function ConteudoDoProdutoAssinadoPage(props) {
+export default function SubscricaoPage(props) {
     const classes = useStyles();
 
-    const {idProduto, nomeDoProduto} = useParams();
+    const {idSubscricao, nomeDaSubscricao} = useParams();
 
     const [conteudoDoProdutoAssinadoResponseApi, setConteudoDoProdutoAssinadoResponseApi] = React.useState({
         hasMore: false,
@@ -139,7 +144,7 @@ export default function ConteudoDoProdutoAssinadoPage(props) {
 
         axios({
             baseURL: domain_api,
-            url: `/produto/assinados/${idProduto}/conteudo`,
+            url: `/produto/subscricao/${idSubscricao}/conteudo`,
             method: 'get',
             headers: {Authorization: 'Bearer '+accessToken},
             params: {
@@ -211,7 +216,7 @@ export default function ConteudoDoProdutoAssinadoPage(props) {
                         <ArrowBackIosRoundedIcon/>
                     </IconButton>
                     <Typography variant={'subtitle1'} style={{color: '#515149'}}>
-                        {nomeDoProduto}
+                        {nomeDaSubscricao}
                     </Typography>
                 </Toolbar>
             </AppBar>

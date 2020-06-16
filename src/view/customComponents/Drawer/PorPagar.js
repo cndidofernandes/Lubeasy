@@ -20,6 +20,8 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function DrawerBottomPaymentInfo({open, handleCloseDrawer, priceToPay, hashTagDownload}) {
+    const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
     let classes = useStyles();
 
     return (
@@ -27,6 +29,8 @@ export default function DrawerBottomPaymentInfo({open, handleCloseDrawer, priceT
             anchor="bottom"
             open={open}
             onOpen={ () => {}}
+            disableBackdropTransition={!iOS}
+            disableDiscovery={iOS}
             onClose = {handleCloseDrawer}>
 
             <Box mx={2} textAlign={'center'} fontFamily="fontFamily" fontWeight={550} fontSize={"h6.fontSize"}>
@@ -61,9 +65,10 @@ export default function DrawerBottomPaymentInfo({open, handleCloseDrawer, priceT
             <Typography className={classes.textoResponsivo} variant='caption' color={'textSecondary'} style={{marginTop: 16, marginLeft: 16, marginRight: 16, marginBottom: 16}}>
                 OBS: Não se esqueça de adicionar na descrição do pagamento a hashtag(<b>#{hashTagDownload}</b>) do seu download.
             </Typography>
-            <Typography className={classes.textoResponsivo} variant='body2' style={{marginLeft: 16, marginRight: 16}}>
-                Tem alguma dúvida de como fazer o pagamento? <a href="#https://www.w3schools.com/" target="_blank">Clique aqui</a>
-            </Typography>
+            {/*<Typography className={classes.textoResponsivo} variant='body2' style={{marginLeft: 16, marginRight: 16}}>
+                Tem alguma dúvida de como fazer o pagamento? <a href="#https://www.w3schools.com/" target="_blank">Clique
+                aqui</a>
+            </Typography>*/}
 
             {/*<Typography className={classes.textoResponsivo} color='textSecondary'
                          style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
@@ -88,7 +93,7 @@ export default function DrawerBottomPaymentInfo({open, handleCloseDrawer, priceT
                 <b>Total a pagar:</b> {priceToPay} Kz
                 </Typography>
             */}
-            <Button onClick={handleCloseDrawer} style={{boxShadow: 'none', margin: 16, color: '#fff'}} variant='contained' color='secondary'>Entendi</Button>
+            <Button onClick={handleCloseDrawer} style={{boxShadow: 'none', margin: 16, color: '#fff'}} variant='contained' color='primary'>Entendi</Button>
             
         </SwipeableDrawer>
     );

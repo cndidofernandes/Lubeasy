@@ -21,7 +21,7 @@ import DialogForPayment from "../customComponents/Dialog/DialogForPayment";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    margin: theme.spacing(0.5, 0.5, 1.6, 0.5)
+    margin: theme.spacing(0.8, 0.6, 1.3, 0.6)
   },
   cover: {
     height: 194,
@@ -53,32 +53,6 @@ export default function ProdutoItem(props) {
 
   const onCloseDialogPayment = () => setOpenDialogPayment(false);
 
-  const getIconOfEstiloByCategoria = (categoria) => {
-
-    switch (categoria) {
-    
-      //Music
-      case 0: 
-        return (<MusicNoteIcon />);
-  
-      //Video
-      case 1:
-        return (<VideocamIcon />);
-      
-      //Image
-      case 2:
-        return (<ImageIcon />);
-  
-      //Docs
-      case 3:  
-        return (<DescriptionIcon />);
-    
-      default:         
-        return (<ErrorOutlineIcon />);
-      
-    }
-  }
-
   const onClickProdutoItem = (e) => {
     history.push('/produto/'+props.uuid);
   }
@@ -91,8 +65,7 @@ export default function ProdutoItem(props) {
           <div className={classes.cardContent}>
             <Chip style={{alignSelf: 'flex-end', marginBottom: 2}}
                   size="small" label={props.tipoProduto}
-                  color={'primary'}
-                  icon={getIconOfEstiloByCategoria(props.categoriaProduto)} />
+                  color={'primary'} />
             <Typography noWrap variant='subtitle1'><b>{props.nomeProduto}</b></Typography>
             <Typography variant="body2" noWrap color="textSecondary">{props.autorProduto}</Typography>
             <Typography variant="caption" color="secondary"><b>{props.precoProduto} Kz</b></Typography>

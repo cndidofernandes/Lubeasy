@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         top:0,
         left:0,
         color:'black',
-        background: '#FFFFFF',
+        background: theme.palette.background.paper,
         boxShadow: 'none',
         borderBottomStyle: 'solid',
         borderBottomWidth: 1,
@@ -57,16 +57,15 @@ const useStyles = makeStyles((theme) => ({
 
 const renderMinhasComprasItem = (value, idx, accessToken, handlers) => {
     return (<MinhaCompraItem key={(value.id)}
-                    id={value.id}
+                    idCompra={value.id}
+                    idProdutoDigital={value.idProdutoDigital}
                     titulo={value.titulo} 
                     autor={value.autor} 
                     preco={value.preco}
                     isPay={value.isPay}
                     accessToken={accessToken}
                     handlePorPagarDrawer={handlers.handlePorPagarDrawer}
-                    handleOpenBackDropDownload={handlers.handleOpenBackDropDownload}
-                    handleCloseBackDropDownload={handlers.handleCloseBackDropDownload}
-                    categoria={value.categoria} 
+                    formato={value.formato}
                     dataDaCompra={value.dataDeCriacao} />)
 }
 
@@ -80,7 +79,7 @@ function a11yProps(index) {
 function TabPanelMinhasCompras(props) {
     const {value, index, downloadResponseApi, setDownloadResponseApi, getMyDownloadsFromApi, subheader, ...other } = props;
     const isFilterComprasPagas = value === 1;
-    const listDownloadFilter = downloadResponseApi.listDownload.filter( (value) => value.isPay === isFilterComprasPagas )
+    const listCompraFilter = downloadResponseApi.listCompra.filter( (value) => value.isPay === isFilterComprasPagas )
 
     const classes = useStyles();
 
@@ -96,23 +95,15 @@ function TabPanelMinhasCompras(props) {
         setInfoFromItemToPorPagarDrawer(priceToPay)
     }
 
-    const handleOpenBackDropDownload = () => {
-        setOpenBackDropDownload(true);
-    }
-
-    const handleCloseBackDropDownload = () => {
-        setOpenBackDropDownload(false);
-    }
-
     const getCorrectContent = () => {
 
-        if(downloadResponseApi.listDownload.length === 0 && !downloadResponseApi.err){
+        if(downloadResponseApi.listCompra.length === 0 && !downloadResponseApi.err){
             return (
                 <Box py={4} display={'flex'} justifyContent={'center'} alignItems={'center'}>
                     <CircularProgress />
                 </Box>
                 )
-        } else if (downloadResponseApi.err && downloadResponseApi.listDownload.length === 0) {
+        } else if (downloadResponseApi.err && downloadResponseApi.listCompra.length === 0) {
             return (<ErrComponent messageDefault='Ophs, ocorreu um erro ao buscar as suas compras.' err={downloadResponseApi.err} />);
         } else {
             return (
@@ -125,11 +116,11 @@ function TabPanelMinhasCompras(props) {
                                 hasMore={downloadResponseApi.hasMore}
                                 loader={<CircularProgress size={18} style={{position:'absolute', left:'50%', marginLeft: -20, marginBottom: 20}}/>}>
                                 {
-                                    listDownloadFilter.map( (value, index) => renderMinhasComprasItem(value, index, downloadResponseApi.accessToken, {handlePorPagarDrawer, handleOpenBackDropDownload, handleCloseBackDropDownload}) )
+                                    listCompraFilter.map( (value, index) => renderMinhasComprasItem(value, index, downloadResponseApi.accessToken, {handlePorPagarDrawer}) )
                                 }
                             </InfiniteScroll>
                         </List>
-                        {(listDownloadFilter.length === 0) && (
+                        {(listCompraFilter.length === 0) && (
                             <Paper elevation={0} style={{padding: 16, paddingBottom: 40}}>
                                 <Typography variant={'body2'} align={'center'}>{isFilterComprasPagas ? 'Você ainda não tem nenhum produto pago.' : 'Você pagou todas as suas compras!'}</Typography>
                             </Paper>)
@@ -174,7 +165,7 @@ export default function MinhasComprasPage(props) {
         hasMore: false,
         page: 0,
         pageSize: 11,
-        listDownload: [],
+        listCompra: [],
         accessToken: null,
         err: null
     });
@@ -193,7 +184,7 @@ export default function MinhasComprasPage(props) {
 
         axios({
             baseURL: domain_api,
-            url: '/download',
+            url: '/compra',
             method: 'get',
             headers: {Authorization: 'Bearer '+accessToken},
             params: {
@@ -207,7 +198,7 @@ export default function MinhasComprasPage(props) {
                     hasMore: response.data.hasMore,
                     page: response.data.page,
                     pageSize: response.data.pageSize,
-                    listDownload: [...downloadResponseApi.listDownload, ...response.data.listDownload],
+                    listCompra: [...downloadResponseApi.listCompra, ...response.data.listCompra],
                     accessToken: accessToken
                 });
             })
@@ -265,14 +256,14 @@ export default function MinhasComprasPage(props) {
                 index={tabValue}
                 onChangeIndex={() => handleChangeIndexTabValue(tabValue)}
             >
-                <TabPanelMinhasCompras subheader='Downloads por pagar:'
+                <TabPanelMinhasCompras subheader='Produtos por pagar:'
                                        downloadResponseApi={downloadResponseApi}
                                        setDownloadResponseApi={setDownloadResponseApi}
                                        getMyDownloadsFromApi={getMyDownloadsFromApi}
                                        value={tabValue} index={0}
                                        dir={theme.direction} />
 
-                <TabPanelMinhasCompras subheader='Downloads pagos:'
+                <TabPanelMinhasCompras subheader='Produtos pagos:'
                                        downloadResponseApi={downloadResponseApi}
                                        setDownloadResponseApi={setDownloadResponseApi}
                                        getMyDownloadsFromApi={getMyDownloadsFromApi}

@@ -1,6 +1,6 @@
 export default function PHPdateTime(DatePattern, dataHora = null) {
     let dateTime;
-    let meses = ['Jan', 'Fev', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Set', 'Out', 'Nov', 'Dez'];
+    let meses = ['Jan', 'Fev', 'Março', 'Abril', 'Maio', 'Jun', 'Jul', 'Agosto', 'Set', 'Out', 'Nov', 'Dez'];
 
     if (dataHora !== null) {
         if (typeof dataHora === "string") {

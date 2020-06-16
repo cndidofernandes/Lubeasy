@@ -88,11 +88,13 @@ const ContentSuccess = ({priceToPay, hashTagDownload = 0}) => {
                 OBS: Não se esqueça de adicionar na descrição do pagamento a hashtag(<b>#{hashTagDownload}</b>) do seu download.
             </Typography>
 
-            <Typography className={classes.textoResponsivo} variant='body2' style={{marginTop: 6, marginLeft: 16, marginRight: 16}}>
-                Tem alguma dúvida de como fazer o pagamento? <a href="#https://www.w3schools.com/" target="_blank">Clique aqui</a>
-            </Typography>
+            {/*<Typography className={classes.textoResponsivo} variant='body2'
+                         style={{marginTop: 6, marginLeft: 16, marginRight: 16}}>
+                Tem alguma dúvida de como fazer o pagamento? <a href="#https://www.w3schools.com/" target="_blank">Clique
+                aqui</a>
+            </Typography>*/}
 
-            <Button onClick={() => history.replace('/meusdownloads')} style={{margin: 16}} variant='contained' color='primary' disableElevation>IR PARA AS MINHAS COMPRAS</Button>
+            <Button onClick={() => history.replace('/minhas-compras')} style={{margin: 16}} variant='contained' color='primary' disableElevation>IR PARA AS MINHAS COMPRAS</Button>
         </>
     )
 }
@@ -138,12 +140,15 @@ const ContentSuccess = ({priceToPay, hashTagDownload = 0}) => {
 
 
 export default function DrawerBottomPaymentInfo({errInfo, open, priceToPay, hashTagDownload}) {
+    const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
     var [openInner, setOpenInner] = React.useState(open) 
     const handleClose = () => setOpenInner(false);
 
     return (
         <SwipeableDrawer
+            disableBackdropTransition={!iOS}
+            disableDiscovery={iOS}
             anchor="bottom"
             open={openInner}
             onOpen={ () => {}}

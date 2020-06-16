@@ -27,7 +27,7 @@ export default function DialogWithConfirmation(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={props.disabled} onClick={props.handleClose} color="primary">
-                        Não
+                        {props.textButtonNegative ? props.textButtonNegative : 'Não'}
                     </Button>
                     <DisablableButton disabled={props.disabled} onClick={props.onSuccess} color="primary" autoFocus>
                         Sim

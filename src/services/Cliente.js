@@ -44,7 +44,7 @@ export function updateUser(user) {
 
 }
 
-export function becomeClienteAutor(onSuccess, onFailure) {
+export function becomeClienteAutor(user, onSuccess, onFailure) {
 
     Auth0().then((auth0) => {
         auth0.getTokenSilently().then((accessToken) => {
@@ -52,6 +52,7 @@ export function becomeClienteAutor(onSuccess, onFailure) {
                 baseURL: domain_api,
                 url: '/cliente/autor',
                 method: 'post',
+                data: user,
                 headers: {Authorization: 'Bearer '+accessToken},
             }).then(function (response) {
                 onSuccess(response);
