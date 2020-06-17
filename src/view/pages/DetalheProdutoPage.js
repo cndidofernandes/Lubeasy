@@ -172,7 +172,7 @@ function MainContentProduto(props){
         <Grid item xs={12} sm={11} md={9} xl={5}>
 
           <Typography className={classes.titleRecommendItens} variant="subtitle1" children={'Também podes gostar de'} />
-          {/*<RecommendedProdutosHorizontal by='estilo' data={props.data.estilo} uuidProduto={props.data.uuid}/>*/}
+          <RecommendedProdutosHorizontal by='tipo' data={props.data.tipo} uuidProduto={props.data.uuid}/>
 
         </Grid>
       </Grid>

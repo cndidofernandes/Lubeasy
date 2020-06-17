@@ -15,7 +15,7 @@ const renderRecommendItem = (value, idx) => {
                   autor={value.autor} 
                   titulo={value.titulo} 
                   preco={value.preco} 
-                  categoria={value.categoria} />)
+                  formato={value.formato} />)
 }
 
 export default function RecommendedProdutosHorizontal(props) {
