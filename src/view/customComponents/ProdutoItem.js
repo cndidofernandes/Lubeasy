@@ -10,9 +10,10 @@ import Chip from '@material-ui/core/Chip';
 
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import VideocamIcon from '@material-ui/icons/Videocam';
-import DescriptionIcon from '@material-ui/icons/Description';
-import ImageIcon from '@material-ui/icons/Image';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import BookIcon from '@material-ui/icons/Book';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
 
 
 import { useHistory } from "react-router-dom";
@@ -45,6 +46,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const formatoProduto = {
+  CURSO_ONLINE: 0,
+  AUDIO: 1,
+  WEBNARIO: 2,
+  EBOOK: 3,
+  FICHEIRO: 4,
+  SERVICO_POR_ASSINATURA: 5,
+}
+
 export default function ProdutoItem(props) {
   const classes = useStyles();
   const history = useHistory();
@@ -57,6 +67,34 @@ export default function ProdutoItem(props) {
     history.push('/produto/'+props.uuid);
   }
 
+  const getIconOfEstiloByFormato = (formato) => {
+
+    switch (formato) {
+
+      case formatoProduto.AUDIO:
+        return (<MusicNoteIcon style={{color: '#fff'}} />);
+
+      case formatoProduto.CURSO_ONLINE:
+        return (<VideocamIcon style={{color: '#fff'}} />);
+
+      case formatoProduto.WEBNARIO:
+          return (<VideocamIcon style={{color: '#fff'}} />);
+
+      case formatoProduto.FICHEIRO:
+        return (<InsertDriveFileIcon style={{color: '#fff'}} />);
+
+      case formatoProduto.SERVICO_POR_ASSINATURA:
+          return (<SubscriptionsIcon style={{color: '#fff'}} />);
+
+      case formatoProduto.EBOOK:
+        return (<BookIcon style={{color: '#fff'}} />);
+
+      default:         
+        return (<ErrorOutlineIcon style={{color: '#fff'}} />);
+      
+    }
+}
+
   return (
     <>
       <Card className={classes.card} elevation={0}>
@@ -64,6 +102,7 @@ export default function ProdutoItem(props) {
           <CardMedia className={classes.cover} image={props.imagemProduto} title={props.nomeProduto} component={'img'}/>
           <div className={classes.cardContent}>
             <Chip style={{alignSelf: 'flex-end', marginBottom: 2}}
+                  icon={getIconOfEstiloByFormato(props.formatoProduto)}
                   size="small" label={props.tipoProduto}
                   color={'primary'} />
             <Typography noWrap variant='subtitle1'><b>{props.nomeProduto}</b></Typography>

@@ -60,33 +60,45 @@ const ContentSuccess = ({priceToPay, hashTagDownload = 0}) => {
                 O pedido de compra do produto foi efectuado com sucesso.
             </Box>
 
-            <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
-                Primeiro passo concluído! Agora, utilize o link ou Código Qr abaixo, para pagar o produto e usufruir o máximo dele:
-            </Typography>
+            { priceToPay !== 0 && (  
+                <>         
+                    <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
+                        Primeiro passo concluído! Agora, utilize o link ou Código Qr abaixo, para pagar o produto e usufruir o máximo dele:
+                    </Typography>
 
-            <Typography align={'center'} style={{marginTop: 8, marginLeft: 16, marginRight: 16}}>
-                <Link
-                    href="https://www.usekamba.com/u/lubeasy_startup"
-                    target={'_blank'}
-                    rel="noreferrer">
-                    https://www.usekamba.com/u/lubeasy_startup
-                </Link>
-            </Typography>
+                    <Typography align={'center'} style={{marginTop: 8, marginLeft: 16, marginRight: 16}}>
+                        <Link
+                            href="https://www.usekamba.com/u/lubeasy_startup"
+                            target={'_blank'}
+                            rel="noreferrer">
+                            https://www.usekamba.com/u/lubeasy_startup
+                        </Link>
+                    </Typography>
 
-            <Box display={'flex'} justifyContent={'center'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
-                <img src={qrcodeKamba} width={160} height={160} />
-            </Box>
+                    <Box display={'flex'} justifyContent={'center'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
+                        <img src={qrcodeKamba} alt={'qrcodekamba'} width={160} height={160} />
+                    </Box>
 
-            <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
-                <b>Hashtag do seu download: </b>#{hashTagDownload}
-            </Typography>
-            <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 1, marginLeft: 16, marginRight: 16}}>
-                <b>Valor á pagar: </b>{priceToPay} Kz
-            </Typography>
+                    <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
+                        <b>Hashtag da sua compra: </b>#{hashTagDownload}
+                    </Typography>
+                    <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 1, marginLeft: 16, marginRight: 16}}>
+                        <b>Valor á pagar: </b>{priceToPay} Kz
+                    </Typography>
 
-            <Typography className={classes.textoResponsivo} variant='caption' color={'textSecondary'} style={{marginTop: 16, marginLeft: 16, marginRight: 16, marginBottom: 16}}>
-                OBS: Não se esqueça de adicionar na descrição do pagamento a hashtag(<b>#{hashTagDownload}</b>) do seu download.
-            </Typography>
+                    <Typography className={classes.textoResponsivo} variant='caption' color={'textSecondary'} style={{marginTop: 16, marginLeft: 16, marginRight: 16, marginBottom: 16}}>
+                        OBS: Não se esqueça de adicionar na descrição do pagamento a hashtag(<b>#{hashTagDownload}</b>) da sua compra.
+                    </Typography>
+                </>
+            )}
+
+            { priceToPay === 0 && (  
+                <>         
+                    <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
+                        Já está! Você acabou de comprar este produto, vá em minhas compras para poder acessá-lo. 
+                    </Typography>
+                </>
+            )}
 
             {/*<Typography className={classes.textoResponsivo} variant='body2'
                          style={{marginTop: 6, marginLeft: 16, marginRight: 16}}>

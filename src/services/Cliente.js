@@ -28,9 +28,14 @@ export function updateUser(user) {
                         cookies.set('isUpdateUserNextTime', true, { path: '/' });
                 }).catch(function (error) {
                     if (error.response){
-                        if (error.response.status === 500)
-                            cookies.set('isUpdateUserNextTime', false, { path: '/' });
-                        else
+                        if (error.response.status === 500){
+
+                            if(error.response.data.code === 'ER_DUP_ENTRY')
+                                cookies.set('isUpdateUserNextTime', false, { path: '/' });
+                            else
+                                cookies.set('isUpdateUserNextTime', true, { path: '/' });
+                            
+                        }else
                             cookies.set('isUpdateUserNextTime', true, { path: '/' });
                     }else{
                         cookies.set('isUpdateUserNextTime', true, { path: '/' });

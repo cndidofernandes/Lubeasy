@@ -10,6 +10,7 @@ import SubscricaoPage from './view/pages/SubscricaoPage';
 import MinhasComprasPage from './view/pages/MinhasComprasPage';
 import SignUpPage from './view/pages/SignUpPage';
 import LoginPage from './view/pages/LoginPage';
+import ForgetPasswordPage from './view/pages/ForgetPasswordPage';
 import NotFoundPage from './view/pages/NotFoundPage';
 import CallbackPage from "./view/pages/CallbackPage";
 import ProdutoCompradoPage from "./view/pages/ProdutoCompradoPage";
@@ -40,6 +41,7 @@ function ContentApp() {
                     <PublicRoute path={'/login'} component={LoginPage} />
                     <PublicRoute path={'/accountcreated'} component={AccountCreatedPage} />
                     <PublicRoute path={'/signup'} component={SignUpPage} />
+                    <PublicRoute path={'/forget-password'} component={ForgetPasswordPage} />
 
                     <Route path={'/callback'} component={CallbackPage} />
                     <Route path={'/produto-comprado/:idCompra/produto/:idProduto'} component={ProdutoCompradoPage} />

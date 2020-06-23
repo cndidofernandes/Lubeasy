@@ -6,18 +6,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
-
-import MusicNoteIcon from '@material-ui/icons/MusicNote';
-import VideocamIcon from '@material-ui/icons/Videocam';
-import DescriptionIcon from '@material-ui/icons/Description';
-import ImageIcon from '@material-ui/icons/Image';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-
 
 import { useHistory } from "react-router-dom";
 
-import DialogForPayment from "../customComponents/Dialog/DialogForPayment";
 import PHPdateTime from "../../utils/PHPdateTime";
 
 const useStyles = makeStyles(theme => ({

@@ -9,20 +9,17 @@ import grey from "@material-ui/core/colors/grey";
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
+
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
+
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ErrComponent from "../customComponents/Err";
 import InfiniteScroll from "react-infinite-scroller";
 import {Auth0} from "../../utils/Auth-spa";
 import axios from "axios";
 import {domain_api} from "../../utils/ApiConfig";
-import ProdutoItem from "../customComponents/ProdutoItem";
-import ProdutoAssinadosItem from "../customComponents/SubscricaoItem";
+
 import {useParams} from "react-router-dom";
 import PHPdateTime from "../../utils/PHPdateTime";
 

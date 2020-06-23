@@ -218,7 +218,7 @@ function AppBarHome(props) {
                             handleClose={() => { setOpenDialogLogout(false); }} 
                             onSuccess={() => { logout(); }}
                             title={'Queres sair da tua conta?'}
-                            contentText={'Ao sair da sua conta você deixará de fazer os downloads das suas músicas, livros, imagens, vídeos e muito mais...'}/>
+                            contentText={'Ao sair da sua conta você deixará de fazer ter acesso aos melhores cursos, livros, músicas, webnários e muito mais...'}/>
         </React.Fragment>
     )
 }

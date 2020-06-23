@@ -5,12 +5,9 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import GetAppIcon from '@material-ui/icons/GetApp';
 
 import AppBarWithBackButton from "../customComponents/AppBarWithBackButton";
-import DisablableButton from "../customComponents/DisablableButton";
-import {becomeClienteAutor} from "../../services/Cliente";
+
 import PageSnackBar from "../customComponents/PageSnackBar";
 
-import { useSelector } from 'react-redux';
-import DialogWithConfirmation from '../customComponents/Dialog/DialogWithConfirmation';
 import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -19,10 +16,10 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
-import Collapse from "@material-ui/core/Collapse";
+
 import Button from "@material-ui/core/Button";
 import Hidden from "@material-ui/core/Hidden";
-import Divider from "@material-ui/core/Divider";
+
 import axios from "axios";
 import {domain_api} from "../../utils/ApiConfig";
 import ErrComponent from "../customComponents/Err";
@@ -31,7 +28,6 @@ import {Auth0} from "../../utils/Auth-spa";
 import PHPdateTime from "../../utils/PHPdateTime";
 import Backdrop from "@material-ui/core/Backdrop";
 import {makeStyles} from "@material-ui/core/styles";
-import grey from "@material-ui/core/colors/grey";
 
 const useStyles = makeStyles((theme) => ({
     root: {

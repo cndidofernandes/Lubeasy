@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import VideocamIcon from '@material-ui/icons/Videocam';
-import DescriptionIcon from '@material-ui/icons/Description';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import BookIcon from '@material-ui/icons/Book';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';

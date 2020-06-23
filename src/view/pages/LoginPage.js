@@ -22,6 +22,7 @@ import PageSnackBar from "../customComponents/PageSnackBar";
 import { getErrDescriptionLoginInPT } from "../../utils/UtilErr";
 
 import Cookies from 'universal-cookie';
+import { Link } from '@material-ui/core';
 
 /*const CircularLogo = withStyles(theme => ({
     root: {
@@ -143,7 +144,7 @@ export default function LoginPage(props) {
 
             <Grid container justify='center' alignItems='center' direction={'column'}>
 
-                <Grid item xs={12} md={3} style={{padding: 16, paddingBottom: 24}}>
+                <Grid item xs={12} style={{padding: 16, paddingBottom: 24}}>
                     <Box style={{marginBottom: 32}} display="flex" justifyContent={'center'}>
                         <img src={appLogotipo} width={65} height={65} alt={'logo-app'} />
                     </Box>
@@ -179,6 +180,10 @@ export default function LoginPage(props) {
                         <Grid container justify='center' alignItems='center'>
                             <Box mx={'auto'} textAlign='center'>
                                 <DisablableButton color='primary' disabled={formSubmiting} type="submit" variant={'contained'} style={{boxShadow: 'none', minWidth: 300}}>Entrar</DisablableButton>
+                                <br/>
+                                {/*<Link style={{padding: 8}} variant="body2" color="textSecondary" href="/forget-password">
+                                    Esqueci-me da minha senha
+                                </Link>*/}
                                 <br/>
                                 <LinkCustom disabled={formSubmiting} path='signup' text='Ainda não tenho uma conta'/>
                             </Box>

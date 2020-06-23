@@ -1,10 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import GetAppIcon from "@material-ui/icons/GetApp";
 import Typography from "@material-ui/core/Typography";
 
-import InfoIcon from '@material-ui/icons/Info';
+
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,8 +19,6 @@ import Zoom from "@material-ui/core/Zoom";
 
 import PHPdateTime from "./../../utils/PHPdateTime";
 
-import { domain_api } from "../../utils/ApiConfig";
-import axios from "axios";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
@@ -59,7 +56,7 @@ const formatoProduto = {
 export default function MinhaCompraItem(props) {
     const classes = useStyles();
     let AvatarIcon;
-    const colorButtonDownload = props.isPay ? '#81c784' : '#e53935';
+    const colorButtonDownload = props.isPay || props.preco === 0 ? '#81c784' : '#e53935';
 
     const history = useHistory();
 
@@ -104,10 +101,20 @@ export default function MinhaCompraItem(props) {
                 history.push(`/produto-comprado/${props.idCompra}/produto/${props.idProdutoDigital}`);
 
         }else{
-            props.handlePorPagarDrawer({
-                priceToPay: props.preco,
-                hashTagDownload: props.idCompra
-            });
+
+            //Produto gratuito
+            if(props.preco === 0){
+                if ( props.formato  === formatoProduto.SERVICO_POR_ASSINATURA )
+                    history.push(`/subscricao/${props.idProdutoDigital}/${props.titulo}`);
+                else
+                    history.push(`/produto-comprado/${props.idCompra}/produto/${props.idProdutoDigital}`);
+            }else{
+                props.handlePorPagarDrawer({
+                    priceToPay: props.preco,
+                    hashTagDownload: props.idCompra
+                });
+            }
+            
         }
 
     };

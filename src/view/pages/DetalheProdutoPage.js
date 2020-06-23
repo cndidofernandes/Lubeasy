@@ -129,7 +129,7 @@ function MainContentProduto(props){
         <Grid item xs={12} sm={6} md={5} xl={3} style={{padding: 16}}>
           <Typography variant={'h6'} style={{fontWeight: 'bold', marginTop: 8}} children={props.data.titulo} />
           <Typography variant={'body2'} color={'textSecondary'} children={props.data.autor} />
-          <Typography variant={'body2'} style={{marginTop: 16}} children={props.data.tipo} />
+          <Typography variant={'body2'} style={{marginTop: 16}} children={props.data.formato === formatoProduto.SERVICO_POR_ASSINATURA ? `Subscrição ${props.data.tipo}` : props.data.tipo} />
 
           <Typography variant="body2" style={{marginTop: 4}} align='justify' color={'textSecondary'}>{props.data.descricao}</Typography>
 
@@ -158,7 +158,7 @@ function MainContentProduto(props){
                     fullWidth
                     startIcon={<ShoppingCartIcon />}
                     onClick={ () => {isAuthenticated ? setOpenDialogForPayment(true) : setOpenDialogLogin(true)}}
-                    children={'Comprar '+props.data.tipo}/>
+                    children={props.data.formato === formatoProduto.SERVICO_POR_ASSINATURA ? `Pagar Subscrição` : 'Comprar '+props.data.tipo}/>
           </Box>
 
           <Box>

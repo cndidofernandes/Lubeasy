@@ -35,7 +35,7 @@ export default function DrawerBottomPaymentInfo({open, handleCloseDrawer, priceT
 
             <Box mx={2} textAlign={'center'} fontFamily="fontFamily" fontWeight={550} fontSize={"h6.fontSize"}>
                 <br/>
-                Você ainda não pagou o seu download? Pague já!
+                Você ainda não fez o pagamento? Pague já!
             </Box>
 
             <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 10, marginLeft: 16, marginRight: 16}}>
@@ -56,14 +56,14 @@ export default function DrawerBottomPaymentInfo({open, handleCloseDrawer, priceT
             </Box>
 
             <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
-                <b>Hashtag do seu download: </b>#{hashTagDownload}
+                <b>Hashtag da seu compra: </b>#{hashTagDownload}
             </Typography>
             <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 1, marginLeft: 16, marginRight: 16}}>
                 <b>Valor á pagar: </b>{priceToPay} Kz
             </Typography>
 
             <Typography className={classes.textoResponsivo} variant='caption' color={'textSecondary'} style={{marginTop: 16, marginLeft: 16, marginRight: 16, marginBottom: 16}}>
-                OBS: Não se esqueça de adicionar na descrição do pagamento a hashtag(<b>#{hashTagDownload}</b>) do seu download.
+                OBS: Não se esqueça de adicionar na descrição do pagamento a hashtag(<b>#{hashTagDownload}</b>) da sua compra.
             </Typography>
             {/*<Typography className={classes.textoResponsivo} variant='body2' style={{marginLeft: 16, marginRight: 16}}>
                 Tem alguma dúvida de como fazer o pagamento? <a href="#https://www.w3schools.com/" target="_blank">Clique

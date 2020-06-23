@@ -42,6 +42,6 @@ export default function CallbackPage(props) {
   });
 
   return (
-      <h5>Aguarde uns segundinhos...</h5>
+      <h5>Aguarde um momento...</h5>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Link } from '@material-ui/core';
 
 import AppBarWithBackButton from "../customComponents/AppBarWithBackButton";
 import CardPage from './CardPage';
@@ -9,7 +9,7 @@ import {becomeClienteAutor} from "../../services/Cliente";
 import PageSnackBar from "../customComponents/PageSnackBar";
 
 import { useSelector } from 'react-redux';
-import DialogWithConfirmation from '../customComponents/Dialog/DialogWithConfirmation';
+
 
 export default function AboudPage(props) {
     const [isBecomingClienteAutor, setIsBecomingClienteAutor] = React.useState(false);
@@ -33,9 +33,9 @@ export default function AboudPage(props) {
 
             if(error.response){
                 if(error.response.data.code === 'ER_DUP_ENTRY'){
-                    setMessageSnackBar('Você já fez o pedido para se tornar um facilitador.');
+                    setMessageSnackBar('Você já fez o pedido para se tornar um produtor.');
                 }else{
-                    setMessageSnackBar('Ocorreu um erro ao realizar o seu pedido.');
+                    setMessageSnackBar('Ocorreu um erro! Por favor recarregue a página e tente novamente.');
                 }
             }else{
                 setMessageSnackBar('Estamos com problemas na conexão com o servidor.');
@@ -63,8 +63,10 @@ export default function AboudPage(props) {
               <Typography variant="subtitle2">Versão 0.0.1</Typography>
             </Grid>
 
-            <Grid item xs={12} md={9} lg={6}>   
-              <Typography variant="subtitle1" onClick={() => props.history.push('/website/termos')} color='secondary'>Termos e Condições De Utilização</Typography>
+            <Grid item xs={12} md={9} lg={6}>
+                <Link variant="subtitle1" color="secondary" href="https://lubeasy-website.herokuapp.com/termos" target="_blank" rel="noreferrer">
+                    Termos e Condições De Utilização
+                </Link>
             </Grid>
 
             <br/><br/>
@@ -81,7 +83,7 @@ export default function AboudPage(props) {
                               onClick={onClickBecomeClienteAutorButton}
                               color={'primary'}
                               size={'small'}>
-                Quero tornar-me num facilitador
+                Quero tornar-me num produtor digital
             </DisablableButton>
         </Typography>
         <PageSnackBar snackBarOpened={snackBarOpened} handleClose={() => setSnackBarOpened(false)} message={messageSnackBar}/>
