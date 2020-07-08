@@ -4,11 +4,16 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import { Collapse } from '@material-ui/core';
+
+import {ExpandLess, ExpandMore} from "@material-ui/icons";
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 
 
 
 export default function AccountCreatedPage(props) {
+
+    const [expandButtonSignIn, setExpandButtonSignIn] = React.useState(false);
     
   return (
       <>
@@ -23,10 +28,10 @@ export default function AccountCreatedPage(props) {
                           <CheckCircleRoundedIcon style={{color: '#00e700'}} fontSize={'inherit'}/>
                       </Box>
                       <Box textAlign={'center'} fontSize={35} color={'textSecondary'} fontWeight="fontWeightLight">Parabéns</Box>
-                      <Box p={2}>
-                          <Typography align={'center'} gutterBottom>A sua conta foi criada com sucesso</Typography>
+                      <Box p={6}>
+                          <Typography align={'center'} gutterBottom>A sua conta no Lubeasy foi criada com sucesso</Typography>
                           <Typography align={'center'} gutterBottom color={'textSecondary'}>
-                              Consulte o seu email, para activar a sua conta e poderes baixar as tuas músicas, livros, imagens e vídeos favoritos.
+                              Por favor, consulte o seu email, nós enviamos para si um email de confirmação para poder finalizar o seu cadastro. Obrigado.
                           </Typography>
                       </Box>
                   </Grid>
@@ -35,7 +40,8 @@ export default function AccountCreatedPage(props) {
 
                   <Grid item>
 
-                      <Button onClick={ () => { props.history.replace('/'); }} variant="contained" color="primary" size="large" style={{boxShadow:'none'}}>Ir para o App</Button>
+                      <Button onClick={() => props.history.replace('/home')} variant="contained" color="primary" size="large" style={{boxShadow:'none'}}>Ir para o app</Button>
+
                       <br/>
                       <br/>
                   </Grid>
@@ -47,7 +53,7 @@ export default function AccountCreatedPage(props) {
                       <Box p={2} py={4}>
 
                           <Typography align={'center'} color={'textSecondary'}>
-                              © Copyrights Lubeasy. Todos os direitos reservados.
+                              © Copyright Lubeasy. Todos os direitos reservados.
                               Desenhado por Lubeasy
                           </Typography>
                       </Box>

@@ -22,7 +22,7 @@ function SplashScreen() {
         <Box component="div" bgcolor={'background.paper'}>
             <Grid style={{height:'100vh'}} container justify='center' alignItems='center'>
                 <Grid item>
-                    <img src={appLogotipo} alt={'logo-app'} style={{width: 65, height: 65, margin: 8}} />
+                    <img src={appLogotipo} alt={'logo-app'} style={{width: 77, height: 86}} />
                     <ColorLinearProgress />
                 </Grid>
             </Grid>

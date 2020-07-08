@@ -16,12 +16,8 @@ export default function AboudPage(props) {
     const [snackBarOpened, setSnackBarOpened] = React.useState(false);
     const [messageSnackBar, setMessageSnackBar] = React.useState(null);
 
-    const {name, email} = useSelector((stateApp) => {
-        return stateApp.getUser;
-    });
-
     const onClickBecomeClienteAutorButton = () => {
-        setIsBecomingClienteAutor(true);
+        /*setIsBecomingClienteAutor(true);
 
         becomeClienteAutor({name, email}, (response) => {
 
@@ -43,7 +39,7 @@ export default function AboudPage(props) {
 
             setIsBecomingClienteAutor(false);
             setSnackBarOpened(true);
-        })
+        })*/
 
     }
 
@@ -63,7 +59,15 @@ export default function AboudPage(props) {
               <Typography variant="subtitle2">Versão 0.0.1</Typography>
             </Grid>
 
+            <Grid item xs={12} md={9} lg={6}>  
+              <br/> 
+              <Typography variant="body2" color='textSecondary' align='center'>
+                  O Lubeasy é uma plataforma angolana de e-commerce de produtos digitais, na qual as pessoas colocam a venda os seus talentos, habilidades ou conhecimentos por meio de um formato digital, permitindo assim, a qualquer um que deseje aprender ou apreciar qualquer coisa possa fazê-lo através do seu smartphone ou computador.
+              </Typography>
+            </Grid>
+
             <Grid item xs={12} md={9} lg={6}>
+                <br/> 
                 <Link variant="subtitle1" color="secondary" href="https://lubeasy-website.herokuapp.com/termos" target="_blank" rel="noreferrer">
                     Termos e Condições De Utilização
                 </Link>
@@ -79,12 +83,9 @@ export default function AboudPage(props) {
 
         </Grid>
         <Typography align={'center'} style={{margin: 8}}>
-            <DisablableButton disabled={isBecomingClienteAutor}
-                              onClick={onClickBecomeClienteAutorButton}
-                              color={'primary'}
-                              size={'small'}>
-                Quero tornar-me num produtor digital
-            </DisablableButton>
+            <Link variant="body2" color="primary" href={`${process.env.REACT_APP_FACILITADOR_APP_URL}`} target="_blank" rel="noreferrer">
+                ACESSAR APLICATIVO WEB DO PRODUTOR
+            </Link>
         </Typography>
         <PageSnackBar snackBarOpened={snackBarOpened} handleClose={() => setSnackBarOpened(false)} message={messageSnackBar}/>
     </>

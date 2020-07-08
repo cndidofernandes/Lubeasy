@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {Grid, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
@@ -25,23 +25,25 @@ import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import axios from "axios";
-import Cookies from "universal-cookie";
 
 import ProdutoItem from "../customComponents/ProdutoItem";
 import ErrComponent from "../customComponents/Err";
 import DialogWithConfirmation from "../customComponents/Dialog/DialogWithConfirmation";
 
 import { domain_api } from "../../utils/ApiConfig";
-import {Auth0} from "../../utils/Auth-spa";
 import grey from "@material-ui/core/colors/grey";
 
 import AppLogoFull from '../../assets/full_logo.png'
-import {removeAllCookieAppToLogout} from "../../utils/HandlerCookieUtil";
 import {makeStyles} from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+import { removeAllDataCookies } from "../../services/Cliente";
+
+import { callIsAuthentication } from "../../redux/actions/AuthThunkAction";
+
 
 import clsx from 'clsx';
 
@@ -73,6 +75,12 @@ function AppBarHome(props) {
     const [openDialogLogout, setOpenDialogLogout] = React.useState(false);
     const classes = useStyles();
     const isMobile = useMediaQuery(theme => theme.breakpoints.only('xs'));
+    
+    const dispatch = useDispatch();
+
+    const isAuthenticated = useSelector((state) =>{
+        return state.isAuthenticated;
+    });
 
 
     const handleClick2 = event => {
@@ -87,17 +95,15 @@ function AppBarHome(props) {
 
     const logout = () => {
         setDisabledDialogLogout(true);
-        removeAllCookieAppToLogout(new Cookies());
+        handleClose2()
 
-        Auth0()
-            .then( async function (auth0) {
-                await auth0.logout()
-                setDisabledDialogLogout(false);
-                setOpenDialogLogout(false);
-            })
-            .catch(function (err) {
-                setDisabledDialogLogout(true);
-        })
+        removeAllDataCookies()
+
+        setDisabledDialogLogout(false);
+        setOpenDialogLogout(false);
+        
+        dispatch(callIsAuthentication());
+
     }
 
     const listenerMyComprasClick = () => {
@@ -114,6 +120,10 @@ function AppBarHome(props) {
 
     const listenerAboutClick = () => {
         props.history.push('/about');
+    }
+
+    const listenerGoToLoginPage = () => {
+        props.history.push('/login');
     }
 
     return (
@@ -149,19 +159,34 @@ function AppBarHome(props) {
                                 <Button
                                         variant='text' size={'small'}
                                         onClick={listenerAboutClick}
-                                        style={{marginRight: 16, marginLeft: 8}}
+                                        style={isAuthenticated ? {marginRight: 16, marginLeft: 8} : {marginLeft: 8}}
                                         children={'Sobre'} />
 
-                                <Typography color={"textSecondary"} variant={'body2'} children={props.nameUser}/>
-                                <Avatar className={classes.userAvatar}>{props.nameUser.charAt(0).toUpperCase()}</Avatar>
-                                <IconButton
-                                    className={clsx(classes.expand, {
-                                        [classes.expandOpen]: anchorEl2,
-                                    })}
-                                    onClick={handleClick2} aria-expanded={anchorEl2}
-                                    aria-label="show more" size={'small'}>
-                                    <ExpandMoreIcon />
-                                </IconButton>
+                                {!isAuthenticated && 
+                                    <Button
+                                            variant='contained' 
+                                            size={'small'}
+                                            color='primary'
+                                            disableElevation
+                                            onClick={listenerGoToLoginPage}
+                                            style={{marginLeft: 8}}
+                                            children={'ENTRAR'} />    
+                                }
+
+                                { isAuthenticated &&
+                                    <>
+                                        <Typography color={"textSecondary"} variant={'body2'} children={props.nameUser}/>
+                                        <Avatar className={classes.userAvatar}>{props.nameUser.charAt(0).toUpperCase()}</Avatar>
+                                        <IconButton
+                                            className={clsx(classes.expand, {
+                                                [classes.expandOpen]: anchorEl2,
+                                            })}
+                                            onClick={handleClick2} aria-expanded={anchorEl2}
+                                            aria-label="show more" size={'small'}>
+                                            <ExpandMoreIcon />
+                                        </IconButton>
+                                    </>
+                                }
                             </Box>
 
                         </Hidden>
@@ -175,12 +200,13 @@ function AppBarHome(props) {
                             <List component={'div'}>
                                 {isMobile && (
                                 <>
+                                    {isAuthenticated &&
                                     <ListItem button divider>
                                         <ListItemAvatar color={'secondary'}>
                                             <Avatar color={'primary'}>{props.nameUser.charAt(0).toUpperCase()}</Avatar>
                                         </ListItemAvatar>
                                         <ListItemText primary={props.nameUser} secondary={props.emailUser} />
-                                    </ListItem>
+                                    </ListItem>}
                                     <ListItem button onClick={listenerMyComprasClick}>
                                         <ListItemAvatar>
                                             <ShoppingBasketIcon />
@@ -200,12 +226,14 @@ function AppBarHome(props) {
                                         <ListItemText primary="Sobre"/>
                                     </ListItem>
                                 </>)}
-                                <ListItem button onClick={listenerLogoutClick}>
-                                    <ListItemAvatar>
-                                        <ExitToAppIcon />
-                                    </ListItemAvatar>
-                                    <ListItemText primary="Sair da conta"/>
-                                </ListItem>
+                                {isAuthenticated &&
+                                    <ListItem button onClick={listenerLogoutClick}>
+                                        <ListItemAvatar>
+                                            <ExitToAppIcon />
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Sair da conta"/>
+                                    </ListItem>
+                                }
                             </List>
                         </Menu>
                     </Toolbar>
@@ -218,7 +246,7 @@ function AppBarHome(props) {
                             handleClose={() => { setOpenDialogLogout(false); }} 
                             onSuccess={() => { logout(); }}
                             title={'Queres sair da tua conta?'}
-                            contentText={'Ao sair da sua conta você deixará de fazer ter acesso aos melhores cursos, livros, músicas, webnários e muito mais...'}/>
+                            contentText={'Ao sair da sua conta você deixará de ter acesso aos produtos que você comprou: livros, músicas, cursos, subscrições, webnários e muito mais...'}/>
         </React.Fragment>
     )
 }
@@ -261,7 +289,6 @@ export default function HomePage(props) {
             baseURL: domain_api,
             url: '/produto',
             method: 'get',
-            headers: {Authorization: 'Bearer '+accessToken},
             params: {
                 page: produtoResponseApi.page+1,
                 pageSize: produtoResponseApi.pageSize
@@ -274,7 +301,7 @@ export default function HomePage(props) {
                 page: response.data.page,
                 pageSize: response.data.pageSize,
                 listProduto: [...produtoResponseApi.listProduto, ...response.data.listProduto],
-                accessToken: accessToken
+                accessToken: ''
             });
         })
         .catch(function (error) {
@@ -295,7 +322,7 @@ export default function HomePage(props) {
             return (
                 <InfiniteScroll
                     pageStart={0}
-                    loadMore={ () => getProdutosFromApi(produtoResponseApi.accessToken)}
+                    loadMore={ () => getProdutosFromApi()}
                     hasMore={produtoResponseApi.hasMore}
                     loader={<CircularProgress size={18} style={{position:'absolute', left:'50%', marginLeft: -20, marginBottom: 20}}/>}>
                     {
@@ -310,13 +337,7 @@ export default function HomePage(props) {
 
     React.useEffect(function(){
 
-        Auth0().then((auth0) => {
-            auth0.getTokenSilently().then((accessToken) => {    
-                getProdutosFromApi(accessToken);
-            });
-        }).catch(function (error) {
-            setProdutoResponseApi({...produtoResponseApi, err: {request: 'Ocorreu um erro, por favor, recarregue a página'}});
-        });
+        getProdutosFromApi();        
 
         return () => {
             source.cancel('Request Cancel');
@@ -325,7 +346,7 @@ export default function HomePage(props) {
 
     return (
         <>
-            <AppBarHome title='Lubeasy' nameUser={user.name} emailUser={user.email} history={props.history} />
+            <AppBarHome title='Lubeasy' nameUser={user.name ? user.name : 'Desconhecido'} emailUser={user.email ? user.email : 'Desconhecido'} history={props.history} />
             {getDynamicContent()}
         </>
     );

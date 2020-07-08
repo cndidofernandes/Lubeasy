@@ -27,7 +27,7 @@ export default function DialogSignInParceiro({open, location, handleClose, onSuc
                             <CloseIcon />
                         </IconButton>
                         <Typography variant="subtitle1" style={{marginLeft: 16, flex: 1, color: '#515149'}}>
-                            Faça primeiro o login
+                            
                         </Typography>
                     </Toolbar>
                 </AppBar>

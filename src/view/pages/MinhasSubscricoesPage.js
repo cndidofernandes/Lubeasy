@@ -10,10 +10,11 @@ import grey from "@material-ui/core/colors/grey";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ErrComponent from "../customComponents/Err";
 import InfiniteScroll from "react-infinite-scroller";
-import {Auth0} from "../../utils/Auth-spa";
 import axios from "axios";
 import {domain_api} from "../../utils/ApiConfig";
 import SubscricaoItem from "../customComponents/SubscricaoItem";
+
+import { getTokenAccess } from "../../services/Cliente";
 
 const useStyles = makeStyles((theme) => ({
     appBar:{
@@ -126,13 +127,7 @@ export default function MinhasSubscricoesPage(props) {
 
     React.useEffect(function(){
 
-        Auth0().then((auth0) => {
-            auth0.getTokenSilently().then((accessToken) => {
-                getProdutosAssinadosFromApi(accessToken);
-            });
-        }).catch(function (error) {
-            setProdutoAssinadosResponseApi({...produtoAssinadosResponseApi, err: {request: 'Ocorreu um erro, por favor, recarregue a página'}});
-        });
+        getProdutosAssinadosFromApi(getTokenAccess());
 
         return () => {
             source.cancel('Request Cancel');

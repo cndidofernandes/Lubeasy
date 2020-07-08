@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
       
 }));
   
-export default function LoginPage(props) {
+export default function LoginDesvioPage(props) {
     const classes = useStyles();
 
     const dispatch = useDispatch();
@@ -70,6 +70,7 @@ export default function LoginPage(props) {
     const [formSubmiting, setFormSubmiting] = React.useState(false);
 
     const [snackBarOpened, setSnackBarOpened] = React.useState(false);
+    const [expandButtonSignIn, setExpandButtonSignIn] = React.useState(false);
 
     const [values, setValues] = useState({
         password: '',
@@ -97,30 +98,68 @@ export default function LoginPage(props) {
         event.preventDefault();
     };
 
+    const handleLoginLikeComprador = e => {
+
+        if(values.email && values.password){
+
+            login(values.email, values.password, function (response, error) {
+            
+                if(!error){
+                    dispatch(callIsAuthentication());
+                }else{
+                    setExpandButtonSignIn(true);
+                    setFormSubmiting(false);
+                    setSnackBarOpened(true);
+
+                    setValues({...values, err: getErrorResponse(error)});
+                }
+    
+            })
+
+        }
+
+    }
+
+    const handleLoginLikeVendendor = e => {
+
+        if(values.email && values.password){
+
+            loginAutor(values.email, values.password, function (response, error) {
+
+                if(!error){
+                    const link = document.createElement('a');
+                    link.href = `${process.env.REACT_APP_FACILITADOR_APP_URL}/`;
+                    document.body.appendChild(link);
+                    link.click();
+                    link.parentNode.removeChild(link);
+                }else{
+                    setSnackBarOpened(true);
+                    setExpandButtonSignIn(true);
+                    setFormSubmiting(false);
+
+                    setValues({...values, err: getErrorResponse(error)});
+                }
+                
+            })
+
+        }
+        
+
+    }
+
     const handleBtSignIn = e => {
         
         e.preventDefault();
+        setExpandButtonSignIn(false);
         setFormSubmiting(true);
 
         if(!values.email || !values.password){
             values.err = 'Preencha os campos!';
             setSnackBarOpened(true);
+            setExpandButtonSignIn(true);
             setFormSubmiting(false);
             return
         }
-
-        login(values.email, values.password, function (response, error) {
-            
-            if(!error){
-                dispatch(callIsAuthentication());
-            }else{
-                setFormSubmiting(false);
-                setSnackBarOpened(true);
-
-                setValues({...values, err: getErrorResponse(error)});
-            }
-
-        })
 
     }
 
@@ -133,11 +172,9 @@ export default function LoginPage(props) {
             <Grid container justify='center' alignItems='center' direction={'column'}>
 
                 <Grid item xs={12} style={{padding: 16, paddingBottom: 24}}>
-                    <Box style={{marginBottom: 12}} display="flex" justifyContent={'center'}>
+                    <Box style={{marginBottom: 24}} display="flex" justifyContent={'center'}>
                         <img src={appLogotipo} width={77} height={86} alt={'logo-app'} />
                     </Box>
-
-                    <Typography style={{marginBottom: 18}} variant='subtitle2' color='textSecondary' align='center'>Por favor, faça primeiro o seu login:</Typography>
 
                     <form autoComplete="off" onSubmit={handleBtSignIn}>
                         <TextFieldCustom
@@ -169,7 +206,13 @@ export default function LoginPage(props) {
                         </Box>
                         <Grid container justify='center' alignItems='center'>
                             <Box mx={'auto'} textAlign='center'>
-                                <DisablableButton disabled={formSubmiting} color='primary' type='submit' variant={'contained'} style={{boxShadow: 'none', minWidth: 300}}>Entrar</DisablableButton>
+                                <DisablableButton disabled={formSubmiting} endIcon={expandButtonSignIn ? <ExpandMore /> : <ExpandLess />} color='primary' variant={'contained'} style={{boxShadow: 'none', minWidth: 300}} onClick={() => setExpandButtonSignIn(!expandButtonSignIn)}>Entrar</DisablableButton>
+
+                                <Collapse in={expandButtonSignIn} timeout="auto" unmountOnExit>
+                                    <DisablableButton size='small' onClick={handleLoginLikeComprador} disabled={formSubmiting} type="submit" variant={'contained'} style={{boxShadow: 'none', minWidth: 300, marginTop: 8}}>Como comprador</DisablableButton>
+                                    <Typography color='textSecondary' variant='body2'> ou </Typography>
+                                    <DisablableButton size='small' onClick={handleLoginLikeVendendor} disabled={formSubmiting} type="submit" variant={'contained'} style={{boxShadow: 'none', minWidth: 300}}>Como produtor</DisablableButton>
+                                </Collapse>
                                 
                                 {/*<Link style={{padding: 8}} variant="body2" color="textSecondary" href="/forget-password">
                                     Esqueci-me da minha senha

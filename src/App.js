@@ -10,9 +10,9 @@ import SubscricaoPage from './view/pages/SubscricaoPage';
 import MinhasComprasPage from './view/pages/MinhasComprasPage';
 import SignUpPage from './view/pages/SignUpPage';
 import LoginPage from './view/pages/LoginPage';
+import LoginDesvioPage from './view/pages/LoginDesvioPage';
 import ForgetPasswordPage from './view/pages/ForgetPasswordPage';
 import NotFoundPage from './view/pages/NotFoundPage';
-import CallbackPage from "./view/pages/CallbackPage";
 import ProdutoCompradoPage from "./view/pages/ProdutoCompradoPage";
 import AccountCreatedPage from "./view/pages/AccountCreatedPage";
 import SplashScreenPage from "./view/pages/SplashScreenPage";
@@ -31,22 +31,26 @@ function ContentApp() {
         <ThemeProvider theme={ThemeApp}>
             <Router>
                 <Switch>
-                    <PrivateRoute exact path={'/'} component={HomePage} />
-                    <PrivateRoute path={'/home'} component={HomePage} />
+
+                    <Route exact path={'/'} component={HomePage} />
                     <PrivateRoute path={'/minhas-compras'} component={MinhasComprasPage} />
                     <PrivateRoute path={'/minhas-subscricoes'} component={MinhasSubscricoesPage} />
                     <PrivateRoute path={'/subscricao/:idSubscricao/:nomeDaSubscricao'} component={SubscricaoPage} />
-                    <PrivateRoute path={'/about'} component={AboutPage} />
+                    <PrivateRoute path={'/produto-comprado/:idCompra/produto/:idProduto'} component={ProdutoCompradoPage} />
+                    
 
                     <PublicRoute path={'/login'} component={LoginPage} />
+                    <PublicRoute path={'/entrar'} component={LoginDesvioPage} />
                     <PublicRoute path={'/accountcreated'} component={AccountCreatedPage} />
                     <PublicRoute path={'/signup'} component={SignUpPage} />
                     <PublicRoute path={'/forget-password'} component={ForgetPasswordPage} />
 
-                    <Route path={'/callback'} component={CallbackPage} />
-                    <Route path={'/produto-comprado/:idCompra/produto/:idProduto'} component={ProdutoCompradoPage} />
+                    
+                    <Route path={'/home'} component={HomePage} />
                     <Route path={'/produto/:uuid'} component={DetalheProdutoPage} />
+                    <Route path={'/about'} component={AboutPage} />
                     <Route component={NotFoundPage} />
+                    
                 </Switch>
             </Router>
         </ThemeProvider>    

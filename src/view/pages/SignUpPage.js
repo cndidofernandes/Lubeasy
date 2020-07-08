@@ -17,13 +17,13 @@ import TextFieldCustom from '../customComponents/TextField';
 
 import blueGrey from '@material-ui/core/colors/blueGrey';
 
-import auth0Client from '../../utils/Auth-js';
 import DisablableButton from "../customComponents/DisablableButton";
 import LinkCustom from "../customComponents/LinkCustom";
 import PageSnackBar from "../customComponents/PageSnackBar";
 
 
-import { getErrDescriptionSignUpInPTByCode } from "../../utils/UtilErr";
+import { createUser } from '../../services/Cliente';
+import { getErrorResponse } from '../../utils/HandlerErrorResponse';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -132,33 +132,36 @@ export default function SignUpPage(props) {
             name: values.name,
             username: values.user_name,
             email: values.email,
-            password: values.password,
-            user_metadata: { phone: values.phone }
+            senha: values.password,
+            telefone: values.phone 
         };
 
-        auth0Client.signUp(user, (err) =>{
-            setFormSubmiting(false);
+        createUser(user, function (response, error) {
+            
+            if(!error){
 
-            if (err){
+                props.history.replace('/accountcreated?email='+user.email);
+
+            }else{
+                setFormSubmiting(false);
                 setSnackBarOpened(true);
-                setValues({...values, err: getErrDescriptionSignUpInPTByCode(err.code, err.description)});
-                return;
+                setValues({...values, err: getErrorResponse(error)});
             }
 
-            props.history.replace('/accountcreated?email='+user.email);
-        });
+        })
+
     };
 
     return (
         <div className={classes.root}>
             <div className={classes.content}>
                 <Paper className={classes.paper} style={{marginTop: 0, display: 'flex', flexDirection: "row",padding: 0, alignItems: 'stretch'}} elevation={0}>
-                    <Box className={classes.titleAppBar} fontSize="h6.fontSize">Criar Conta</Box>
+                    <Box className={classes.titleAppBar} fontSize="h6.fontSize">Criar conta no Lubeasy</Box>
                 </Paper>
                 <Paper className={classes.paper} elevation={0}>
                     <form autoComplete="off" onSubmit={criarConta}>
-                        <TextFieldCustom disabled={formSubmiting} icon={<PersonIcon />} propsInputBase={{type: 'text', required: true, placeholder: 'Primerio e último nome', onChange: handleChange('name')}} />
-                        <TextFieldCustom disabled={formSubmiting} icon={<PersonIcon />} propsInputBase={{type: 'text', required: true, placeholder: 'Nome de usúario', onChange: handleChange('user_name')}} />
+                        <TextFieldCustom disabled={formSubmiting} icon={<PersonIcon />} propsInputBase={{type: 'text', required: true, placeholder: 'Primerio e último nome', onChange: handleChange('name'), inputProps: {minlength: 6, maxlength: 35, pattern: '^[a-zA-ZáàâãéèêẽíìîĩóòõôúùũûçÁÀÂÃÉÈÊẼÍÌĨÎÓÒÕÔÚÙŨÔÇ]+(?:[ ]+[a-zA-ZáàâãéèêẽíìîĩóòõôúùũûçÁÀÂÃÉÈÊẼÍÌĨÎÓÒÕÔÚÙŨÔÇ]+)*$', title: 'O primeiro e último nome não pode ter números nem caracteres especiais(Ex: $%&#@=+...).'} }} />
+                        <TextFieldCustom disabled={formSubmiting} icon={<PersonIcon />} propsInputBase={{type: 'text', required: true, placeholder: 'Nome de usúario', onChange: handleChange('user_name'), inputProps: {minlength: 2, maxlength: 20, pattern: '^[a-z0-9._]*$', title: 'O nome de usuário não pode ter caracteres maiúsculos, espaços nem pontuação (exepto: _ e .).'}}} />
                         <TextFieldCustom disabled={formSubmiting} icon={<EmailIcon />} propsInputBase={{type: 'email', required: true, placeholder: 'Email', onChange: handleChange('email')}} />
                         <TextFieldCustom disabled={formSubmiting} icon={<PhoneIcon />} propsInputBase={{type: 'tel',  required: true, placeholder: 'Número de telefone', onChange: handleChange('phone'), inputProps: {pattern: '[0-9]{3}[0-9]{3}[0-9]{3}'}, startAdornment: (<InputAdornment position="start">+244</InputAdornment>)}} />
                         <Box className={classes.searchBar} borderRadius={100}>
@@ -170,7 +173,7 @@ export default function SignUpPage(props) {
                                 required={true}
                                 type={values.showPassword ? 'text' : 'password'}
                                 value={values.password}
-                                inputProps={{minlength: 8}}
+                                inputProps={{minlength: 8, maxlength: 50}}
                                 onChange={handleChange('password')}
                                 endAdornment={
                                     <InputAdornment position="end">
@@ -186,7 +189,7 @@ export default function SignUpPage(props) {
                         </Grid>
                     </form>
 
-                    <Box className={classes.typography} textAlign="center" variant='body2' >Ao clicar em criar conta, você concorda com nossos {<b><LinkCustom disabled={formSubmiting} path={'https://lubventos.herokuapp.com/website/termos'} text="Termos e Condições De Utilização." /></b>}</Box>
+                    <Box className={classes.typography} textAlign="center" variant='body2' >Ao clicar em criar conta, você concorda com nossos {<b><LinkCustom disabled={formSubmiting} path={'https://lubeasy-website.herokuapp.com/termos'} text="Termos e Condições De Utilização." /></b>}</Box>
                 </Paper>
                 <Paper className={classes.paper} elevation={0}>
                     <Box className={classes.typography} textAlign="center">Já tem uma conta? <LinkCustom disabled={formSubmiting} path='/login' text={<p className={classes.link}>Faça o login</p>}/> </Box>

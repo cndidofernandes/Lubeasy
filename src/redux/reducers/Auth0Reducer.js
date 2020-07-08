@@ -12,7 +12,7 @@ export function isAuthenticated(state = null, action) {
     }
 }
 
-export function getUser(state = {nickname: 'Buscando...', email: 'Buscando...'}, action) {
+export function getUser(state = {name: 'Buscando...', email: 'Buscando...'}, action) {
 
     switch (action.type) {
         case 'GET_USER':

@@ -24,10 +24,11 @@ import axios from "axios";
 import {domain_api} from "../../utils/ApiConfig";
 import ErrComponent from "../customComponents/Err";
 import {useParams} from "react-router-dom";
-import {Auth0} from "../../utils/Auth-spa";
 import PHPdateTime from "../../utils/PHPdateTime";
 import Backdrop from "@material-ui/core/Backdrop";
 import {makeStyles} from "@material-ui/core/styles";
+
+import { getTokenAccess } from "../../services/Cliente";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -115,7 +116,7 @@ export default function ProdutoCompradoPage(props) {
 
             setTimeout(() => {
                 handleCloseBackDropDownload();
-            }, 1000);
+            },5000);
 
         }).catch(function (error) {
             handleCloseBackDropDownload();
@@ -144,7 +145,7 @@ export default function ProdutoCompradoPage(props) {
 
             setTimeout(() => {
                 handleCloseBackDropDownload();
-            }, 1000);
+            }, 2000);
 
         }).catch(function (error) {
             handleCloseBackDropDownload();
@@ -168,17 +169,7 @@ export default function ProdutoCompradoPage(props) {
 
     React.useEffect(function(){
 
-        Auth0().then((auth0) => {
-            auth0.getTokenSilently().then((accessToken) => {
-                getProdutoComprado(accessToken);
-            });
-        }).catch(function (error) {
-            setProdutoCompradoStateApi({
-                isGettingProdutoComprado: false,
-                produtoComprado: produtoCompradoStateApi.produtoComprado,
-                err: {request: 'Ocorreu um erro, por favor, recarregue a página'}
-            });
-        });
+        getProdutoComprado(getTokenAccess());
 
         return () => {
             source.cancel('Request Cancel');

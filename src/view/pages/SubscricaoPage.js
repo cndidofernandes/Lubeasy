@@ -16,12 +16,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ErrComponent from "../customComponents/Err";
 import InfiniteScroll from "react-infinite-scroller";
-import {Auth0} from "../../utils/Auth-spa";
 import axios from "axios";
 import {domain_api} from "../../utils/ApiConfig";
 
 import {useParams} from "react-router-dom";
 import PHPdateTime from "../../utils/PHPdateTime";
+import { getTokenAccess } from '../../services/Cliente';
 
 const useStyles = makeStyles((theme) => ({
     appBar:{
@@ -71,8 +71,8 @@ function ConteudoDaSubscricaoItem(props) {
                 <CardMedia
                     component="img"
                     style={{height: 200}}
-                    image="https://psdflyer.co/wp-content/uploads/2019/02/urban-sound-psd-free-flyer-template-v2-download1.jpg"
-                    title="Contemplative Reptile"/>
+                    image={props.foto_capa}
+                    title={props.titulo}/>
                 <CardContent>
 
                     <Typography variant="overline" color="textSecondary">
@@ -111,6 +111,7 @@ const renderProdutoItem = (value, idx) => {
             <ConteudoDaSubscricaoItem
                 id={value.id}
                 titulo={value.titulo}
+                foto_capa={value.foto_capa}
                 autor={value.autor}
                 tipo={value.tipo}
                 descricao={value.descricao}
@@ -192,13 +193,7 @@ export default function SubscricaoPage(props) {
 
     React.useEffect(function(){
 
-        Auth0().then((auth0) => {
-            auth0.getTokenSilently().then((accessToken) => {
-                getProdutosAssinadosFromApi(accessToken);
-            });
-        }).catch(function (error) {
-            setConteudoDoProdutoAssinadoResponseApi({...conteudoDoProdutoAssinadoResponseApi, err: {request: 'Ocorreu um erro, por favor, recarregue a página'}});
-        });
+        getProdutosAssinadosFromApi(getTokenAccess());
 
         return () => {
             source.cancel('Request Cancel');

@@ -7,7 +7,6 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import Backdrop from '@material-ui/core/Backdrop';
 import { CircularProgress, Typography } from '@material-ui/core';
 
-import {Auth0} from "../../utils/Auth-spa";
 import ErrComponent from "../customComponents/Err";
 import PorPagar from "../customComponents/Drawer/PorPagar";
 
@@ -27,6 +26,8 @@ import Tab from "@material-ui/core/Tab";
 import SwipeableViews from "react-swipeable-views";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
+
+import { getTokenAccess } from "../../services/Cliente";
 
 const useStyles = makeStyles((theme) => ({
     appBar:{
@@ -213,13 +214,7 @@ export default function MinhasComprasPage(props) {
 
     React.useEffect(function(){
 
-        Auth0().then((auth0) => {
-            auth0.getTokenSilently().then((accessToken) => {
-                getMyDownloadsFromApi(accessToken);
-            });
-        }).catch(function (error) {
-            setDownloadResponseApi({...downloadResponseApi, err: {request: 'Ophs, ocorreu um erro ao se conectar com o servidor'}});
-        });
+        getMyDownloadsFromApi(getTokenAccess());
 
         return () => {
             source.cancel('Request Cancel Minhas');

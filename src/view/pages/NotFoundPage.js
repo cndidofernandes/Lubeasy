@@ -18,8 +18,8 @@ import { Grid } from '@material-ui/core';
 export default function PageNotFound() {
   return (
     <Grid container justify="center" alignItems="center" style={{margin: 16}}>
-        <Grid item xs={12} md={9} lg={6}>
-            <h1>Page not found</h1>
+        <Grid item xs={12}>
+            <h1>Página não encontrada</h1>
         </Grid>
     </Grid>
   );

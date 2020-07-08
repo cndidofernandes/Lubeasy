@@ -34,9 +34,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DisablableButton from "../DisablableButton";
 
 
-import { Auth0 } from '../../../utils/Auth-spa';
 import DrawerBottomPaymentInfo from '../Drawer/DrawerBottomPaymentInfo';
 import { Box } from '@material-ui/core';
+import { getTokenAccess } from '../../../services/Cliente';
 
 
 const useStyles = makeStyles(theme => ({
@@ -204,15 +204,7 @@ function VerticalLinearStepper({produtoOrder}) {
     const onClickFormPay = (event) => {
         setNetworkObj({...networkObj, isLoading: true, err: null});
 
-        Auth0().then((auth0) => {
-            auth0.getTokenSilently().then((accessToken) => {
-              savePaymentInApi(accessToken);
-            }).catch(function (error) {
-                setNetworkObj({...networkObj, isLoading: false, err: {request: {}}});
-            });
-        }).catch(function (error) {
-            setNetworkObj({...networkObj, isLoading: false, err: {request: {}}});
-        });
+        savePaymentInApi(getTokenAccess());
         
     };
 
