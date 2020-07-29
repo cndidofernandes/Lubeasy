@@ -64,6 +64,7 @@ const renderMinhasComprasItem = (value, idx, accessToken, handlers) => {
                     autor={value.autor} 
                     preco={value.preco}
                     isPay={value.isPay}
+                    formaDePagamento={value.formaDePagamento}
                     accessToken={accessToken}
                     handlePorPagarDrawer={handlers.handlePorPagarDrawer}
                     formato={value.formato}
@@ -129,6 +130,7 @@ function TabPanelMinhasCompras(props) {
                         <PorPagar open={openPorPagarDrawer}
                                   handleCloseDrawer={() => setOpenPorPagarDrawer(false)}
                                   priceToPay={infoFromItemToPorPagarDrawer.priceToPay}
+                                  formaDePagamento={infoFromItemToPorPagarDrawer.formaDePagamento}
                                   hashTagDownload={infoFromItemToPorPagarDrawer.hashTagDownload} />
 
                         <Backdrop className={classes.backdrop} open={openBackDropDownload}>

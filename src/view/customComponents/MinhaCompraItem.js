@@ -44,10 +44,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const formatoProduto = {
-    CURSO_ONLINE: 0,
-    AUDIO: 1,
+    CURSO_ONLINE: 3,
+    AUDIO: 0,
     WEBNARIO: 2,
-    EBOOK: 3,
+    EBOOK: 1,
     FICHEIRO: 4,
     SERVICO_POR_ASSINATURA: 5,
 }
@@ -111,6 +111,7 @@ export default function MinhaCompraItem(props) {
             }else{
                 props.handlePorPagarDrawer({
                     priceToPay: props.preco,
+                    formaDePagamento: props.formaDePagamento,
                     hashTagDownload: props.idCompra
                 });
             }

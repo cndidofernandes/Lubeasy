@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import qrcodeKamba from '../../../assets/MyQrImageKamba.jpg';
 
 import Link from "@material-ui/core/Link";
+import { BAI_ACCOUNT_INFO } from '../../../utils/config/DadosBancarios';
 
 const useStyles = makeStyles(theme => ({
     textoResponsivo: {
@@ -24,6 +25,11 @@ const useStyles = makeStyles(theme => ({
         },
     },
 }));
+
+const formaDePagamentoEnum = {
+    KAMBA_APP: 'Kamba',
+    Transferencia_bancaria: 'TB',
+}
 
 const ContentErr = ({errInfo, handleClose}) => {
     let classes = useStyles();
@@ -46,69 +52,124 @@ const ContentErr = ({errInfo, handleClose}) => {
     )
 }
 
-const ContentSuccess = ({priceToPay, hashTagDownload = 0}) => {
+const ContentSuccess = ({priceToPay, hashTagDownload = 0, formaDePagamento}) => {
     let classes = useStyles();
     let history = useHistory();
 
-    return (
-        <>
-            <br/>
-            <Box textAlign={'center'} fontSize={60} color={'textSecondary'}>
-                <CheckCircleRoundedIcon style={{color: '#00e700'}} fontSize={'inherit'}/>
-            </Box>
-            <Box textAlign={'center'} mx={1} fontFamily="fontFamily" fontWeight={550} fontSize={"h6.fontSize"}>
-                O pedido de compra do produto foi efectuado com sucesso.
-            </Box>
+    if(formaDePagamentoEnum.KAMBA_APP === formaDePagamento){
 
-            { priceToPay !== 0 && (  
-                <>         
-                    <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
-                        Primeiro passo concluído! Agora, utilize o link ou Código Qr abaixo, para pagar o produto e usufruir o máximo dele:
-                    </Typography>
+        return (
+            <>
+                <br/>
+                <Box textAlign={'center'} fontSize={60} color={'textSecondary'}>
+                    <CheckCircleRoundedIcon style={{color: '#00e700'}} fontSize={'inherit'}/>
+                </Box>
+                <Box textAlign={'center'} mx={1} fontFamily="fontFamily" fontWeight={550} fontSize={"h6.fontSize"}>
+                    O pedido de compra do produto foi efectuado com sucesso.
+                </Box>
+    
+                { priceToPay !== 0 && (  
+                    <>         
+                        <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
+                            Primeiro passo concluído! Agora, utilize o link ou Código Qr abaixo, para pagar o produto e usufruir o máximo dele:
+                        </Typography>
+    
+                        <Typography align={'center'} style={{marginTop: 8, marginLeft: 16, marginRight: 16}}>
+                            <Link
+                                href="https://www.usekamba.com/u/lubeasy_startup"
+                                target={'_blank'}
+                                rel="noreferrer">
+                                https://www.usekamba.com/u/lubeasy_startup
+                            </Link>
+                        </Typography>
+    
+                        <Box display={'flex'} justifyContent={'center'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
+                            <img src={qrcodeKamba} alt={'qrcodekamba'} width={160} height={160} />
+                        </Box>
+    
+                        <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
+                            <b>Hashtag da sua compra: </b>#{hashTagDownload}
+                        </Typography>
+                        <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 1, marginLeft: 16, marginRight: 16}}>
+                            <b>Valor á pagar: </b>{priceToPay} Kz
+                        </Typography>
+    
+                        <Typography className={classes.textoResponsivo} variant='caption' color={'textSecondary'} style={{marginTop: 16, marginLeft: 16, marginRight: 16, marginBottom: 16}}>
+                            OBS: Não se esqueça de adicionar na descrição do pagamento a hashtag(<b>#{hashTagDownload}</b>) da sua compra.
+                        </Typography>
+                    </>
+                )}
+    
+                { priceToPay === 0 && (  
+                    <>         
+                        <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
+                            Já está! Você acabou de comprar este produto, vá em minhas compras para poder acessá-lo. 
+                        </Typography>
+                    </>
+                )}
+    
+                {/*<Typography className={classes.textoResponsivo} variant='body2'
+                             style={{marginTop: 6, marginLeft: 16, marginRight: 16}}>
+                    Tem alguma dúvida de como fazer o pagamento? <a href="#https://www.w3schools.com/" target="_blank">Clique
+                    aqui</a>
+                </Typography>*/}
+    
+                <Button onClick={() => history.replace('/minhas-compras')} style={{margin: 16}} variant='contained' color='primary' disableElevation>IR PARA AS MINHAS COMPRAS</Button>
+            </>
+        )
 
-                    <Typography align={'center'} style={{marginTop: 8, marginLeft: 16, marginRight: 16}}>
-                        <Link
-                            href="https://www.usekamba.com/u/lubeasy_startup"
-                            target={'_blank'}
-                            rel="noreferrer">
-                            https://www.usekamba.com/u/lubeasy_startup
-                        </Link>
-                    </Typography>
+    }else if(formaDePagamentoEnum.Transferencia_bancaria === formaDePagamento){
 
-                    <Box display={'flex'} justifyContent={'center'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
-                        <img src={qrcodeKamba} alt={'qrcodekamba'} width={160} height={160} />
-                    </Box>
+        return (
+            <>
+                <br/>
+                <Box textAlign={'center'} fontSize={60} color={'textSecondary'}>
+                    <CheckCircleRoundedIcon style={{color: '#00e700'}} fontSize={'inherit'}/>
+                </Box>
+                <Box textAlign={'center'} mx={0.9} fontFamily="fontFamily" fontWeight={600} fontSize={"h6.fontSize"}>
+                    O pedido de compra do produto foi efectuado com sucesso.
+                </Box>
+                
+                <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
+                    Utilize os dados bancários abaixo, para fazer o pagamento do produto. Após efetuar o pagamento, envie-nos uma foto do comprovativo através das nossas redes socias.
+                </Typography>
+                <Typography className={classes.textoResponsivo} style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
+                    <b>IBAN:</b> {BAI_ACCOUNT_INFO.IBAN}
+                </Typography>
+                <Typography className={classes.textoResponsivo} style={{marginTop: 1, marginLeft: 16, marginRight: 16}}>
+                    <b>Banco: </b>{BAI_ACCOUNT_INFO.NOME}
+                </Typography>
+                <Typography className={classes.textoResponsivo} style={{marginTop: 0, marginLeft: 16, marginRight: 16}}>
+                    <b>Titular:</b> {BAI_ACCOUNT_INFO.TITULAR}
+                </Typography>
+                <Typography className={classes.textoResponsivo} style={{marginTop: 1, marginLeft: 16, marginRight: 16}}>
+                    <b>Total a pagar:</b> {priceToPay} Kz
+                </Typography>
+                <br/>
+                
+                { priceToPay === 0 && (  
+                    <>         
+                        <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
+                            Já está! Você acabou de comprar este produto, vá em minhas compras para poder acessá-lo. 
+                        </Typography>
+                    </>
+                )}
+    
+                {/*<Typography className={classes.textoResponsivo} variant='body2'
+                             style={{marginTop: 6, marginLeft: 16, marginRight: 16}}>
+                    Tem alguma dúvida de como fazer o pagamento? <a href="#https://www.w3schools.com/" target="_blank">Clique
+                    aqui</a>
+                </Typography>*/}
+    
+                <Button onClick={() => history.replace('/minhas-compras')} style={{margin: 16}} variant='contained' color='primary' disableElevation>IR PARA AS MINHAS COMPRAS</Button>
+            </>
+        )
 
-                    <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 4, marginLeft: 16, marginRight: 16}}>
-                        <b>Hashtag da sua compra: </b>#{hashTagDownload}
-                    </Typography>
-                    <Typography align={'center'} variant={'subtitle2'} style={{marginTop: 1, marginLeft: 16, marginRight: 16}}>
-                        <b>Valor á pagar: </b>{priceToPay} Kz
-                    </Typography>
+    }else{
+        return <Typography align='center'><br/>Ophs! Ocorreu um erro desconhecido...<br/></Typography>
+    }
 
-                    <Typography className={classes.textoResponsivo} variant='caption' color={'textSecondary'} style={{marginTop: 16, marginLeft: 16, marginRight: 16, marginBottom: 16}}>
-                        OBS: Não se esqueça de adicionar na descrição do pagamento a hashtag(<b>#{hashTagDownload}</b>) da sua compra.
-                    </Typography>
-                </>
-            )}
 
-            { priceToPay === 0 && (  
-                <>         
-                    <Typography className={classes.textoResponsivo} color='textSecondary' style={{marginTop: 16, marginLeft: 16, marginRight: 16}}>
-                        Já está! Você acabou de comprar este produto, vá em minhas compras para poder acessá-lo. 
-                    </Typography>
-                </>
-            )}
-
-            {/*<Typography className={classes.textoResponsivo} variant='body2'
-                         style={{marginTop: 6, marginLeft: 16, marginRight: 16}}>
-                Tem alguma dúvida de como fazer o pagamento? <a href="#https://www.w3schools.com/" target="_blank">Clique
-                aqui</a>
-            </Typography>*/}
-
-            <Button onClick={() => history.replace('/minhas-compras')} style={{margin: 16}} variant='contained' color='primary' disableElevation>IR PARA AS MINHAS COMPRAS</Button>
-        </>
-    )
 }
 
 /*const ContentSuccess = ({priceToPay}) => {
@@ -151,7 +212,7 @@ const ContentSuccess = ({priceToPay, hashTagDownload = 0}) => {
 } */
 
 
-export default function DrawerBottomPaymentInfo({errInfo, open, priceToPay, hashTagDownload}) {
+export default function DrawerBottomPaymentInfo({errInfo, open, priceToPay, hashTagDownload, formaDePagamento}) {
     const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
     var [openInner, setOpenInner] = React.useState(open) 
@@ -165,7 +226,7 @@ export default function DrawerBottomPaymentInfo({errInfo, open, priceToPay, hash
             open={openInner}
             onOpen={ () => {}}
             onClose={handleClose}>
-            {errInfo ? <ContentErr errInfo={errInfo} handleClose={handleClose} /> : <ContentSuccess priceToPay={priceToPay} hashTagDownload={hashTagDownload}/>}
+            {errInfo ? <ContentErr errInfo={errInfo} handleClose={handleClose} /> : <ContentSuccess priceToPay={priceToPay} hashTagDownload={hashTagDownload} formaDePagamento={formaDePagamento}/>}
         </SwipeableDrawer>
     );
 }

@@ -151,12 +151,6 @@ function AppBarHome(props) {
                                         children={'Minhas compras'} />
 
                                 <Button
-                                    variant='text' size={'small'}
-                                    onClick={listenerSubscricoesClick}
-                                    style={{marginLeft: 8}}
-                                    children={'Subscrições'} />
-
-                                <Button
                                         variant='text' size={'small'}
                                         onClick={listenerAboutClick}
                                         style={isAuthenticated ? {marginRight: 16, marginLeft: 8} : {marginLeft: 8}}
@@ -212,12 +206,6 @@ function AppBarHome(props) {
                                             <ShoppingBasketIcon />
                                         </ListItemAvatar>
                                         <ListItemText primary="Minhas compras" />
-                                    </ListItem>
-                                    <ListItem button onClick={listenerSubscricoesClick}>
-                                        <ListItemAvatar>
-                                            <SubscriptionsIcon />
-                                        </ListItemAvatar>
-                                        <ListItemText primary="Subscrições" />
                                     </ListItem>
                                     <ListItem button onClick={listenerAboutClick}>
                                         <ListItemAvatar>

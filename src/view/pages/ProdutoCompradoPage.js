@@ -202,12 +202,12 @@ export default function ProdutoCompradoPage(props) {
                             <>
                                 <ListItem dense button key={key}>
                                     <ListItemAvatar>
-                                        <Avatar alt={value.titulo} src={value.foto_capa} />
+                                        <Avatar alt={value.titulo} src={produtoCompradoStateApi.produtoComprado.capa} />
                                     </ListItemAvatar>
                                     <ListItemText primary={value.titulo} secondary={value.autor} />
 
                                     <ListItemSecondaryAction>
-                                        <Hidden smUp>
+
                                             <IconButton edge="end" onClick={handleButtonDownloadClick(value)}>
                                                 { value.isDownloadable
                                                     ?
@@ -216,13 +216,13 @@ export default function ProdutoCompradoPage(props) {
                                                     <OpenInNewIcon color='primary'/>
                                                 }
                                             </IconButton>
-                                        </Hidden>
-                                        <Hidden smDown>
+                                        
+                                        {/*<Hidden smDown>
                                             <Button startIcon={value.isDownloadable ? <GetAppIcon color='primary'/> : <OpenInNewIcon color='primary'/>}
                                                     size={'small'} color={'primary'}
                                                     onClick={handleButtonDownloadClick(value)}
                                                     disableElevation>{value.isDownloadable ? 'Baixar' : 'Abrir'} {produtoCompradoStateApi.produtoComprado.tipo}</Button>
-                                        </Hidden>
+                                        </Hidden>*/}
                                     </ListItemSecondaryAction>
 
                                 </ListItem>

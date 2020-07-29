@@ -175,7 +175,7 @@ export default function LoginPage(props) {
                                     Esqueci-me da minha senha
                                 </Link>*/}
                                 <br/>
-                                <LinkCustom disabled={formSubmiting} path='signup' text='Ainda não tenho uma conta'/>
+                                <LinkCustom disabled={formSubmiting} path='../signup' text='Ainda não tenho uma conta'/>
                             </Box>
                         </Grid>
                     </form>

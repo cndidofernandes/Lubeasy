@@ -4,3 +4,10 @@ export const BFA_ACCOUNT_INFO = {
     TITULAR: 'Cândido Malavoloneque',
     NUMERO: '###'
 }
+
+export const BAI_ACCOUNT_INFO = {
+    IBAN: 'AO06.0040.0000.3252.1269.1018.9',
+    NOME: 'Banco Angolano de Investimentos (BAI)',
+    TITULAR: 'MANUEL ELCANE CHISSINGUI MARIO',
+    NUMERO: '###'
+}

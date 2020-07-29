@@ -12,7 +12,6 @@ import { useSelector } from 'react-redux';
 
 
 export default function AboudPage(props) {
-    const [isBecomingClienteAutor, setIsBecomingClienteAutor] = React.useState(false);
     const [snackBarOpened, setSnackBarOpened] = React.useState(false);
     const [messageSnackBar, setMessageSnackBar] = React.useState(null);
 
@@ -61,7 +60,7 @@ export default function AboudPage(props) {
 
             <Grid item xs={12} md={9} lg={6}>  
               <br/> 
-              <Typography variant="body2" color='textSecondary' align='center'>
+              <Typography align='center' style={{marginLeft: 12, marginRight: 12}} variant="body2" color='textSecondary' align='center'>
                   O Lubeasy é uma plataforma angolana de e-commerce de produtos digitais, na qual as pessoas colocam a venda os seus talentos, habilidades ou conhecimentos por meio de um formato digital, permitindo assim, a qualquer um que deseje aprender ou apreciar qualquer coisa possa fazê-lo através do seu smartphone ou computador.
               </Typography>
             </Grid>

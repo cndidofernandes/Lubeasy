@@ -65,10 +65,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const formatoProduto = {
-    CURSO_ONLINE: 0,
-    AUDIO: 1,
+    CURSO_ONLINE: 3,
+    AUDIO: 0,
     WEBNARIO: 2,
-    EBOOK: 3,
+    EBOOK: 1,
     FICHEIRO: 4,
     SERVICO_POR_ASSINATURA: 5,
 }
@@ -136,6 +136,7 @@ function GetStepContent({step, formPaymentValue, handleChange, onClickFormPay, i
                 <div>
                     <RadioGroup aria-label="forma_pagamento" name="forma_pagamento" value={formPaymentValue} onChange={handleChange}>
                         <FormControlLabel value="Kamba" control={<Radio />} label="Kamba - Carteira Virtual" />
+                        <FormControlLabel value="TB" control={<Radio />} label="Transferência Bancária (IBAN)" />
                     </RadioGroup>
                     <DisablableButton disabled={isLoading} 
                                       onClick={onClickFormPay}
@@ -262,6 +263,7 @@ function VerticalLinearStepper({produtoOrder}) {
                     <>
                         <DrawerBottomPaymentInfo errInfo={networkObj.err}
                                                  open={true}
+                                                 formaDePagamento={formPaymentValue}
                                                  priceToPay={produtoOrder.preco}
                                                  hashTagDownload={ networkObj.data ? networkObj.data.hashtag_da_compra : 0}/>
                     </>)
