@@ -1,3 +1,3 @@
 ## Lubeasy
 
-Um site (PWA) criado em ReactJS, para venda de produtos digitas.
+Um aplicativo web (PWA) criado em ReactJS, para venda de produtos digitas.
